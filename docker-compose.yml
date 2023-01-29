@@ -2,7 +2,7 @@ version: '3.7'
 services:
   database-mysql:
     container_name: database-mysql
-    image: mysql:latest
+    image: mysql:5.7
     environment:
       MYSQL_DATABASE: 'mysqlDB'
       MYSQL_USER: admin
