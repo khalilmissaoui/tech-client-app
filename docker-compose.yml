@@ -1,25 +1,24 @@
 version: '3.7'
 services:
-  database-postgres:
-    container_name: database-postgres
-    image: postgres
+  database-mysql:
+    container_name: database-mysql
+    image: mysql:latest
     environment:
-      POSTGRES_DB: database-postgres
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: password
-      PGDATA: /data/postgres
+      MYSQL_DATABASE: 'mysqlDB'
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: password
+
     volumes:
-      - database-postgres:/var/lib/postgresql/data
+      - database-mysql:/var/lib/mysql
     ports:
-      - "5432:5432"
-    command: -p 5432
+      - "3306:3306"
     expose:
-      - "5432"
+      - "3306"
     restart: always
 
 
 
 
 volumes:
-  database-postgres:
+  database-mysql:
     driver: local
