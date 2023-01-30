@@ -5,8 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 
 @Data
@@ -14,8 +13,22 @@ import javax.persistence.Id;
 @NoArgsConstructor
 @Builder
 @Entity
+@Table( name = "T_AGENCE")
 public class Agency {
     @Id
-    private Long id;
+    @GeneratedValue(strategy= GenerationType.AUTO)
+    private Long agenceId;
+
+    private String localisation;
+
+    @Column(
+            name = "agence_nom",
+            nullable = false
+    )
+    private String name ;
+
+
+    private String description ;
+
 
 }
