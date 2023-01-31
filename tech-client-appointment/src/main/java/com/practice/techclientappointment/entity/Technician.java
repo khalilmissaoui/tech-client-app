@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -54,4 +55,10 @@ public class Technician {
             referencedColumnName = "agenceId"
     )
     private Agency agency;
+
+    @OneToMany(
+            cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER
+    )
+    private List<Appointment>  appointment;
 }
