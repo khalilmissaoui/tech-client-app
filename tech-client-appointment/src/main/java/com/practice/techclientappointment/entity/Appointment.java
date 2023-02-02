@@ -18,6 +18,7 @@ import java.util.Date;
 public class Appointment {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
+
     private Long appointmentId;
 
     private String price;
@@ -28,7 +29,7 @@ public class Appointment {
 
     @ManyToOne(
             optional = false
-
+            ,cascade=CascadeType.ALL
     )
     @JoinColumn(
             name = "client_id",
@@ -36,9 +37,8 @@ public class Appointment {
     )
     private Client client;
 
-    @ManyToOne(
-
-            optional = false
+    @ManyToOne(optional = false
+            ,cascade=CascadeType.ALL
 
     )
     @JoinColumn(

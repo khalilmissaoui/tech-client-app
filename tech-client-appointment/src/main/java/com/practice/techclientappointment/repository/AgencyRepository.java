@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface AgencyRepository extends JpaRepository<Agency, Long> {
@@ -18,9 +19,10 @@ public interface AgencyRepository extends JpaRepository<Agency, Long> {
 
     List<Agency> findByDescriptionNotNull();
 
+
     //JPQL
     @Query("select agence from Agency agence where agence.agenceId = ?1")
-    Agency getAgencyByItsId(Long id);
+    Optional <Agency>  getAgencyByItsId(Long id);
     //SQL QUERY
     @Query(
             value = "SELECT * FROM t_agence ta WHERE ta.agence_nom = ?1",

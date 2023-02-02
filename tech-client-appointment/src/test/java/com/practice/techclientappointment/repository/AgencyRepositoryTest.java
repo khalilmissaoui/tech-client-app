@@ -26,7 +26,6 @@ class AgencyRepositoryTest {
         Agency agency1 = Agency.builder()
                 .name("Agence 1")
                 .localisation("Paris sud")
-
                 .build();
 
         Agency agency2 = Agency.builder()
@@ -45,7 +44,6 @@ class AgencyRepositoryTest {
                 .name("Agence 4")
                 .localisation("Paris east")
                 .description("random description")
-
                 .build();
 
         agencyRepository.save(agency1);
@@ -113,15 +111,16 @@ class AgencyRepositoryTest {
     }
 
     @Test
-    public void getAgencyByID () {
-        Long ID = 1L;
-        Optional<Agency> agency = Optional.of(agencyRepository.getAgencyByItsId(ID));
+    public void getAgencyByID () throws Exception {
+        Long ID = agencyRepository.findAll().get(0).getAgenceId();
+
+        Agency agency = agencyRepository.getAgencyByItsId(ID).orElseThrow(() -> new Exception("EMPTY LIST OF AGENCIES"));
 
 
 
-        assertThat(agency.get().getAgenceId().equals(ID)).isTrue();
+        assertThat(agency.getAgenceId().equals(ID)).isTrue();
 
-        log.info("--agency ID is  --> :"+agency.get().getAgenceId());
+        log.info("--agency ID is  --> :"+agency.getAgenceId());
     }
 }
 
