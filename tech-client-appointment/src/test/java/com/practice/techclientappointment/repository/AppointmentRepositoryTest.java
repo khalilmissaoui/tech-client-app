@@ -2,8 +2,8 @@ package com.practice.techclientappointment.repository;
 
 import com.practice.techclientappointment.entity.*;
 import lombok.extern.slf4j.Slf4j;
+import org.assertj.core.util.DateUtil;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.function.Executable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -49,6 +49,7 @@ class AppointmentRepositoryTest {
                 .builder()
                 .price("324 £")
                 .technician(tech)
+                .time(DateUtil.now())
                 .client(client)
                 .build();
 

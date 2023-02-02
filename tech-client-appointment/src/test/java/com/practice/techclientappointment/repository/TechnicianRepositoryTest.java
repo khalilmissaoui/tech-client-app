@@ -1,6 +1,6 @@
 package com.practice.techclientappointment.repository;
 
-import com.practice.techclientappointment.entity.Agency;
+
 import com.practice.techclientappointment.entity.Technician;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeAll;
@@ -8,10 +8,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Optional;
+
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -107,14 +105,14 @@ class TechnicianRepositoryTest {
 
     @Test
     public void getTechBlurryStateList () {
-        Optional<List<Technician>> technicians = Optional.of(technicianRepository.findByIsAvailableIsNull());
+        List<Technician> technicians = technicianRepository.findByIsAvailableIsNull();
 
 
-        technicians.get().forEach(
+        technicians.forEach(
                 technician -> assertThat(technician.getIsAvailable()).isNull()
         );
 
-        log.info("--technicians with unclear state count --> :"+technicians.get().size());
+        log.info("--technicians with unclear state count --> :"+technicians.size());
 
     }
 
