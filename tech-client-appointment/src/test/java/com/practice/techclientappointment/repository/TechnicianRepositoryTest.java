@@ -25,11 +25,7 @@ class TechnicianRepositoryTest {
 
   @Test
     public void saveTechnician() throws Exception {
-        Agency agency = Agency.builder()
-                .agenceId(1L)
-              .name("Agence 1")
-              .localisation("Paris sud")
-              .build();
+
 
         Technician tech1 = Technician.builder()
                 .firstName("rami")
@@ -38,7 +34,6 @@ class TechnicianRepositoryTest {
                 .personalPhoneNumber("1772398842")
                 .Zone("C")
                 .speciality("electrique")
-                .agency(agency)
                 .isAvailable(true)
                 .build();
 
@@ -50,7 +45,7 @@ class TechnicianRepositoryTest {
                 .personalPhoneNumber("2328842")
                 .Zone("D")
                 .speciality("batiment")
-                .agency(agency)
+
                 .isAvailable(false)
                 .build();
 
@@ -62,7 +57,7 @@ class TechnicianRepositoryTest {
                 .personalPhoneNumber("3233000842")
                 .Zone("B")
                 .speciality("electrique")
-                .agency(agency)
+
                 .isAvailable(false)
                 .build();
 
@@ -74,7 +69,6 @@ class TechnicianRepositoryTest {
                 .personalPhoneNumber("41233398842")
                 .Zone("H")
                 .speciality("electrique")
-                .agency(agency)
                 .isAvailable(true)
                 .build();
 
@@ -85,7 +79,6 @@ class TechnicianRepositoryTest {
               .personalPhoneNumber("541233398842")
               .Zone("H")
               .speciality("electrique")
-              .agency(agency)
               .isAvailable(false)
               .build();
 

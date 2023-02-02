@@ -51,16 +51,15 @@ public class Technician {
     private Boolean isAvailable;
 
 
-    @ManyToOne()
+    @ManyToOne(
+            cascade = CascadeType.ALL
+    )
     @JoinColumn(
             name = "agency_id",
             referencedColumnName = "agenceId"
     )
     private Agency agency;
 
-    @OneToMany(
-            cascade = CascadeType.ALL,
-            fetch = FetchType.EAGER
-    )
+    @OneToMany()
     private List<Appointment>  appointment;
 }
