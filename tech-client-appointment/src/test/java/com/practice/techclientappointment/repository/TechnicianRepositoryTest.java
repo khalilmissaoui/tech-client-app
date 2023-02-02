@@ -3,9 +3,13 @@ package com.practice.techclientappointment.repository;
 import com.practice.techclientappointment.entity.Agency;
 import com.practice.techclientappointment.entity.Technician;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,6 +19,7 @@ import static org.assertj.core.api.Assertions.*;
 
 
 @SpringBootTest
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @Slf4j
 class TechnicianRepositoryTest {
 
@@ -23,7 +28,7 @@ class TechnicianRepositoryTest {
     TechnicianRepository technicianRepository;
 
 
-  @Test
+  @BeforeAll
     public void saveTechnician() throws Exception {
 
 
@@ -91,9 +96,14 @@ class TechnicianRepositoryTest {
       technicianRepository.save(tech5);
 
 
-
     }
 
+    @Test
+    public void getListOfTechs() {
+      List<Technician> technicians = technicianRepository.findAll();
+
+      assertThat(technicians.size()).isEqualTo(5);
+    }
 
     @Test
     public void getTechBlurryStateList () {

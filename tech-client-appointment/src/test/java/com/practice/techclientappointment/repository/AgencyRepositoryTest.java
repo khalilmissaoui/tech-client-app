@@ -2,7 +2,9 @@ package com.practice.techclientappointment.repository;
 
 import com.practice.techclientappointment.entity.Agency;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,6 +16,7 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.*;
 
 @SpringBootTest
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @Slf4j
 class AgencyRepositoryTest {
 
@@ -21,7 +24,7 @@ class AgencyRepositoryTest {
     AgencyRepository agencyRepository;
 
 
-    @Test
+    @BeforeAll
     public void saveAgency() {
         Agency agency1 = Agency.builder()
                 .name("Agence 1")
