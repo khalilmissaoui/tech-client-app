@@ -14,11 +14,13 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table( name = "T_TECHNICIEN",
-        uniqueConstraints = @UniqueConstraint(
+@Table( name = "T_TECHNICIEN"
+  /*      , uniqueConstraints = @UniqueConstraint(
         name = "unique_attributes_tech",
         columnNames = {"number" , "personalPhoneNumber"}
-)
+        )
+        */
+
 )
 public class Technician {
 
