@@ -26,7 +26,6 @@ class AgencyRepositoryTest {
         Agency agency1 = Agency.builder()
                 .name("Agence 1")
                 .localisation("Paris sud")
-
                 .build();
 
         Agency agency2 = Agency.builder()
@@ -45,7 +44,6 @@ class AgencyRepositoryTest {
                 .name("Agence 4")
                 .localisation("Paris east")
                 .description("random description")
-
                 .build();
 
         agencyRepository.save(agency1);

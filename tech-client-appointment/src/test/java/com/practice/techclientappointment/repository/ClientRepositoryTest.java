@@ -37,12 +37,12 @@ class ClientRepositoryTest {
                     .street("Street "+ i)
                     .build();
 
-            Client student = Client.builder()
+            Client client = Client.builder()
                     .type("Agency "+ i)
                     .address(address )
                     .build();
 
-            clientRepository.save(student);
+            clientRepository.save(client);
         }
 
 
