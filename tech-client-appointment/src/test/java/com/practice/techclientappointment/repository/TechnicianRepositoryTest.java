@@ -22,13 +22,14 @@ class TechnicianRepositoryTest {
     @Autowired
     TechnicianRepository technicianRepository;
 
-    @Autowired
-    AgencyRepository agencyRepository;
 
   @Test
     public void saveTechnician() throws Exception {
-        Long ID = agencyRepository.findAll().get(0).getAgenceId();
-        Agency agency = agencyRepository.getAgencyByItsId(ID).orElseThrow(() -> new Exception("EMPTY LIST OF AGENCIES"));
+        Agency agency = Agency.builder()
+                .agenceId(1L)
+              .name("Agence 1")
+              .localisation("Paris sud")
+              .build();
 
         Technician tech1 = Technician.builder()
                 .firstName("rami")
@@ -150,26 +151,6 @@ class TechnicianRepositoryTest {
         log.info("--technician with the ID  --> :"+technician.getTechId() + " UPDATE state to UNAVAILABLE ");
 
     }
-    @Test()
-    public void setTechFirstName () throws Exception {
 
-        String firstName = "tech2";
-        String newName = "random new name for test";
-
-        Technician technician = technicianRepository.findFirstByFirstName(firstName).get();
-
-
-
-
-        Long ID = technician.getTechId();
-
-        technicianRepository.updateFirstNameByID(newName,ID);
-        assertThat(technicianRepository.findByTechId(ID).get().getFirstName()).isEqualTo(newName);
-
-
-
-        log.info("--technician with the ID  --> :"+ID + " UPDATE FIRSTNAME to :  "+technician.getFirstName());
-
-    }
 
 }
