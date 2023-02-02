@@ -7,17 +7,20 @@ import org.springframework.data.jpa.repository.Query;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 public interface TechnicianRepository  extends JpaRepository<Technician, Long> {
 
 
-    Technician findFirstByIsAvailableIsFalse();
+    Optional<Technician> findFirstByIsAvailableIsTrue();
 
-    Technician findFirstByIsAvailableIsNull();
+    Optional<Technician> findFirstByIsAvailableIsFalse();
 
-    Technician findByTechId(Long id);
+    Optional<Technician> findFirstByIsAvailableIsNull();
 
-    Technician findFirstByFirstName(String firstName);
+    Optional<Technician> findByTechId(Long id);
+
+    Optional<Technician> findFirstByFirstName(String firstName);
     List<Technician> findByIsAvailableIsNull();
 
 

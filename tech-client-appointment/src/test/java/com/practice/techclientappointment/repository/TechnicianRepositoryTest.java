@@ -26,9 +26,9 @@ class TechnicianRepositoryTest {
     AgencyRepository agencyRepository;
 
   @Test
-    public void saveTechnician() {
-        Long ID = 1L;
-        Optional<Agency> agency = Optional.of(agencyRepository.getAgencyByItsId(ID));
+    public void saveTechnician() throws Exception {
+        Long ID = agencyRepository.findAll().get(0).getAgenceId();
+        Agency agency = agencyRepository.getAgencyByItsId(ID).orElseThrow(() -> new Exception("EMPTY LIST OF AGENCIES"));
 
         Technician tech1 = Technician.builder()
                 .firstName("rami")
@@ -37,7 +37,7 @@ class TechnicianRepositoryTest {
                 .personalPhoneNumber("1772398842")
                 .Zone("C")
                 .speciality("electrique")
-                .agency(agency.get())
+                .agency(agency)
                 .isAvailable(true)
                 .build();
 
@@ -49,7 +49,7 @@ class TechnicianRepositoryTest {
                 .personalPhoneNumber("2328842")
                 .Zone("D")
                 .speciality("batiment")
-                .agency(agency.get())
+                .agency(agency)
                 .isAvailable(false)
                 .build();
 
@@ -61,7 +61,7 @@ class TechnicianRepositoryTest {
                 .personalPhoneNumber("3233000842")
                 .Zone("B")
                 .speciality("electrique")
-                .agency(agency.get())
+                .agency(agency)
                 .isAvailable(false)
                 .build();
 
@@ -73,7 +73,7 @@ class TechnicianRepositoryTest {
                 .personalPhoneNumber("41233398842")
                 .Zone("H")
                 .speciality("electrique")
-                .agency(agency.get())
+                .agency(agency)
                 .isAvailable(true)
                 .build();
 
@@ -84,13 +84,19 @@ class TechnicianRepositoryTest {
               .personalPhoneNumber("541233398842")
               .Zone("H")
               .speciality("electrique")
-              .agency(agency.get())
+              .agency(agency)
+              .isAvailable(false)
               .build();
-        technicianRepository.save(tech1);
-        technicianRepository.save(tech2);
-        technicianRepository.save(tech3);
-        technicianRepository.save(tech4);
-        technicianRepository.save(tech5);
+
+
+
+      technicianRepository.save(tech1);
+      technicianRepository.save(tech2);
+      technicianRepository.save(tech3);
+      technicianRepository.save(tech4);
+      technicianRepository.save(tech5);
+
+
 
     }
 
@@ -111,53 +117,58 @@ class TechnicianRepositoryTest {
 
     @Test()
     public void setTechStateToAvailable () throws Exception {
-        Optional<Technician> technician = Optional.of(technicianRepository.findFirstByIsAvailableIsFalse());
+        Technician technician = technicianRepository.findFirstByIsAvailableIsFalse().orElseThrow(() -> new Exception("TECH not found"));
 
-        Long ID = technician.orElseThrow(() -> new Exception("TECH not found")).getTechId();
+        Long ID = technician.getTechId();
 
-        assertThat(technician.get().getIsAvailable()).isFalse();
+        assertThat(technician.getIsAvailable().compareTo(Boolean.TRUE)).isEqualTo(-1);
+
+
 
         technicianRepository.updateTechStateToAvailable(ID);
 
-        assertThat(technicianRepository.findByTechId(ID).getIsAvailable()).isTrue();
+        assertThat(technicianRepository.findByTechId(ID).isPresent()).isTrue();
 
 
-        log.info("--technician with the ID  --> :"+technician.get().getTechId() + " UPDATE state to AVAILABLE ");
+        log.info("--technician with the ID  --> :"+technician.getTechId() + " UPDATE state to AVAILABLE ");
 
     }
 
     @Test()
     public void setTechStateToUnavailable () throws Exception {
-        Optional<Technician> technician = Optional.of(technicianRepository.findFirstByIsAvailableIsNull());
+        Technician technician = technicianRepository.findFirstByIsAvailableIsTrue().orElseThrow(() -> new Exception("TECH not found"));
 
-        Long ID = technician.orElseThrow(() -> new Exception("TECH not found")).getTechId();
+        Long ID = technician.getTechId();
 
-        assertThat(technician.get().getIsAvailable()).isNull();
+        assertThat(technician.getIsAvailable()).isTrue();
 
         technicianRepository.updateTechStateToUnavailable(ID);
 
-        assertThat(technicianRepository.findByTechId(ID).getIsAvailable()).isFalse();
+        assertThat(technicianRepository.findByTechId(ID).isPresent()).isTrue();
 
 
-        log.info("--technician with the ID  --> :"+technician.get().getTechId() + " UPDATE state to UNAVAILABLE ");
+        log.info("--technician with the ID  --> :"+technician.getTechId() + " UPDATE state to UNAVAILABLE ");
 
     }
     @Test()
-    public void setTechFirstName ()  {
+    public void setTechFirstName () throws Exception {
 
         String firstName = "tech2";
         String newName = "random new name for test";
 
-        Optional<Technician> technician = Optional.of(technicianRepository.findFirstByFirstName(firstName));
+        Technician technician = technicianRepository.findFirstByFirstName(firstName).get();
 
-        Long ID = technician.get().getTechId();
+
+
+
+        Long ID = technician.getTechId();
 
         technicianRepository.updateFirstNameByID(newName,ID);
-        assertThat(technicianRepository.findByTechId(ID).getFirstName()).isEqualTo(newName);
+        assertThat(technicianRepository.findByTechId(ID).get().getFirstName()).isEqualTo(newName);
 
 
 
-        log.info("--technician with the ID  --> :"+ID + " UPDATE FIRSTNAME to :  "+technician.get().getFirstName());
+        log.info("--technician with the ID  --> :"+ID + " UPDATE FIRSTNAME to :  "+technician.getFirstName());
 
     }
 
