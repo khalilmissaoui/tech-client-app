@@ -19,6 +19,16 @@ services:
     restart: always
 
 
+### Application
+
+  app-service:
+    container_name: app-service
+    image: khalilmissaoui/client-tech-gestion:data-layer
+    restart: on-failure
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      - database-mysql
 
 
 volumes:
