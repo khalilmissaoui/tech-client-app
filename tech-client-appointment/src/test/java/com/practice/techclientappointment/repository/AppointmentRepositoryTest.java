@@ -18,7 +18,7 @@ class AppointmentRepositoryTest {
 
 
     @Test
-    public void saveAppointment(){
+    public void SHOULD_SAVE_TEST_APPOINTMENTS_DATA_IN_DB(){
 
 
         Address address = Address.builder()
@@ -62,7 +62,7 @@ class AppointmentRepositoryTest {
 
 
     @Test
-    public void NotSaveAppointmentIfTechNotEXIST(){
+    public void SHOULD_THROWS_EXCEPTION_WITHOUT_TECH_ASSIGNED(){
 
 
         Address address = Address.builder()
@@ -95,7 +95,7 @@ class AppointmentRepositoryTest {
     }
 
     @Test
-    public void NotSaveAppointmentIfClientNotEXIST(){
+    public void SHOULD_THROWS_EXCEPTION_WITHOUT_CLIENT_ASSIGNED(){
 
 
 
