@@ -3,27 +3,28 @@ package com.practice.techclientappointment.repository;
 import com.practice.techclientappointment.entity.Address;
 import com.practice.techclientappointment.entity.Client;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.Sort;
-
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Slf4j
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class ClientRepositoryTest {
 
     @Autowired
     private ClientRepository clientRepository;
 
-    @Test
+    @BeforeAll
     public void saveClients() {
 
 

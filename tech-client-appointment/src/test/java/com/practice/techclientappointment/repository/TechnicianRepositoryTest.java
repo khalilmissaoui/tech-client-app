@@ -1,13 +1,15 @@
 package com.practice.techclientappointment.repository;
 
-import com.practice.techclientappointment.entity.Agency;
+
 import com.practice.techclientappointment.entity.Technician;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import java.util.List;
-import java.util.Optional;
+
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -15,6 +17,7 @@ import static org.assertj.core.api.Assertions.*;
 
 
 @SpringBootTest
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @Slf4j
 class TechnicianRepositoryTest {
 
@@ -23,13 +26,9 @@ class TechnicianRepositoryTest {
     TechnicianRepository technicianRepository;
 
 
-  @Test
+  @BeforeAll
     public void saveTechnician() throws Exception {
-        Agency agency = Agency.builder()
-                .agenceId(1L)
-              .name("Agence 1")
-              .localisation("Paris sud")
-              .build();
+
 
         Technician tech1 = Technician.builder()
                 .firstName("rami")
@@ -38,7 +37,6 @@ class TechnicianRepositoryTest {
                 .personalPhoneNumber("1772398842")
                 .Zone("C")
                 .speciality("electrique")
-                .agency(agency)
                 .isAvailable(true)
                 .build();
 
@@ -50,7 +48,7 @@ class TechnicianRepositoryTest {
                 .personalPhoneNumber("2328842")
                 .Zone("D")
                 .speciality("batiment")
-                .agency(agency)
+
                 .isAvailable(false)
                 .build();
 
@@ -62,7 +60,7 @@ class TechnicianRepositoryTest {
                 .personalPhoneNumber("3233000842")
                 .Zone("B")
                 .speciality("electrique")
-                .agency(agency)
+
                 .isAvailable(false)
                 .build();
 
@@ -74,7 +72,6 @@ class TechnicianRepositoryTest {
                 .personalPhoneNumber("41233398842")
                 .Zone("H")
                 .speciality("electrique")
-                .agency(agency)
                 .isAvailable(true)
                 .build();
 
@@ -85,7 +82,6 @@ class TechnicianRepositoryTest {
               .personalPhoneNumber("541233398842")
               .Zone("H")
               .speciality("electrique")
-              .agency(agency)
               .isAvailable(false)
               .build();
 
@@ -98,20 +94,25 @@ class TechnicianRepositoryTest {
       technicianRepository.save(tech5);
 
 
-
     }
 
+    @Test
+    public void getListOfTechs() {
+      List<Technician> technicians = technicianRepository.findAll();
+
+      assertThat(technicians.size()).isEqualTo(5);
+    }
 
     @Test
     public void getTechBlurryStateList () {
-        Optional<List<Technician>> technicians = Optional.of(technicianRepository.findByIsAvailableIsNull());
+        List<Technician> technicians = technicianRepository.findByIsAvailableIsNull();
 
 
-        technicians.get().forEach(
+        technicians.forEach(
                 technician -> assertThat(technician.getIsAvailable()).isNull()
         );
 
-        log.info("--technicians with unclear state count --> :"+technicians.get().size());
+        log.info("--technicians with unclear state count --> :"+technicians.size());
 
     }
 

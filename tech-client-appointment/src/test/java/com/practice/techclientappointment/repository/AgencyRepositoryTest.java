@@ -2,18 +2,19 @@ package com.practice.techclientappointment.repository;
 
 import com.practice.techclientappointment.entity.Agency;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.slf4j.Logger;
+import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
 import java.util.List;
-import java.util.Optional;
+
 
 
 import static org.assertj.core.api.Assertions.*;
 
 @SpringBootTest
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @Slf4j
 class AgencyRepositoryTest {
 
@@ -21,7 +22,7 @@ class AgencyRepositoryTest {
     AgencyRepository agencyRepository;
 
 
-    @Test
+    @BeforeAll
     public void saveAgency() {
         Agency agency1 = Agency.builder()
                 .name("Agence 1")
@@ -55,14 +56,14 @@ class AgencyRepositoryTest {
 
     @Test
     public void getDescribedAgencies () {
-        Optional<List<Agency>> agencies = Optional.of(agencyRepository.findByDescriptionNotNull());
+        List<Agency> agencies = agencyRepository.findByDescriptionNotNull();
 
 
-        agencies.get().stream().forEach(
+        agencies.stream().forEach(
                 agency -> assertThat(agency.getDescription()).isNotNull()
         );
 
-        log.info("--Described agencies total are --> :"+agencies.get().size());
+        log.info("--Described agencies total are --> :"+agencies.size());
     }
 
 
@@ -70,44 +71,44 @@ class AgencyRepositoryTest {
     @Test
     public void getAgenciesByLocation () {
         String LOCATION = "Paris west" ;
-        Optional<List<Agency>> agencies = Optional.of(agencyRepository.findByLocalisation(LOCATION));
+        List<Agency> agencies = agencyRepository.findByLocalisation(LOCATION);
 
 
 
-        agencies.get().stream().forEach(
+        agencies.stream().forEach(
                 agency -> assertThat(agency.getLocalisation().equals(LOCATION)).isTrue()
         );
 
-        log.info("--agencies in " + LOCATION +" total are --> :"+agencies.get().size());
+        log.info("--agencies in " + LOCATION +" total are --> :"+agencies.size());
     }
 
     @Test
     public void getAgenciesByName () {
         String NAME = "1" ;
-        Optional<List<Agency>> agencies = Optional.of(agencyRepository.findByNameContaining(NAME));
+        List<Agency> agencies = agencyRepository.findByNameContaining(NAME);
 
 
 
-        agencies.get().stream().forEach(
+        agencies.stream().forEach(
                 agency -> assertThat(agency.getName().contains(NAME)).isTrue()
         );
 
-        log.info("--agencies total are --> :"+agencies.get().size());
+        log.info("--agencies total are --> :"+agencies.size());
     }
 
 
     @Test
     public void getAgenciesByNameNative () {
         String NAME = "Agence 2" ;
-        Optional<List<Agency>> agencies = Optional.of(agencyRepository.getAgencyByNameNative(NAME));
+        List<Agency> agencies = agencyRepository.getAgencyByNameNative(NAME);
 
 
 
-        agencies.get().stream().forEach(
+        agencies.stream().forEach(
                 agency -> assertThat(agency.getName().contains(NAME)).isTrue()
         );
 
-        log.info("--agencies total are --> :"+agencies.get().size());
+        log.info("--agencies total are --> :"+agencies.size());
     }
 
     @Test
