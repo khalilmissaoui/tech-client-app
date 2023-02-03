@@ -32,7 +32,6 @@ class AgencyRepositoryTest {
         Agency agency2 = Agency.builder()
                 .name("Agence 2")
                 .localisation("Paris nord")
-
                 .build();
 
         Agency agency3 = Agency.builder()
