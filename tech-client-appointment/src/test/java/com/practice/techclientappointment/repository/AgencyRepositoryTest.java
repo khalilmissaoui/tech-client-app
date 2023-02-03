@@ -23,7 +23,7 @@ class AgencyRepositoryTest {
 
 
     @BeforeAll
-    public void saveAgency() {
+    public void SHOULD_SAVE_TEST_DATA_IN_DB() {
         Agency agency1 = Agency.builder()
                 .name("Agence 1")
                 .localisation("Paris sud")
@@ -55,7 +55,7 @@ class AgencyRepositoryTest {
     }
 
     @Test
-    public void getDescribedAgencies () {
+    public void SHOULD_RETURN_LIST_OF_AGENCIES_WITH_DESCRIPTIONS_NOT_NULL () {
         List<Agency> agencies = agencyRepository.findByDescriptionNotNull();
 
 
@@ -69,7 +69,7 @@ class AgencyRepositoryTest {
 
 
     @Test
-    public void getAgenciesByLocation () {
+    public void SHOULD_RETURN_LIST_OF_AGENCIES_BY_LOCATION () {
         String LOCATION = "Paris west" ;
         List<Agency> agencies = agencyRepository.findByLocalisation(LOCATION);
 
@@ -83,7 +83,7 @@ class AgencyRepositoryTest {
     }
 
     @Test
-    public void getAgenciesByName () {
+    public void SHOULD_RETURN_LIST_OF_AGENCIES_CONTAINS_NAME () {
         String NAME = "1" ;
         List<Agency> agencies = agencyRepository.findByNameContaining(NAME);
 
@@ -98,7 +98,7 @@ class AgencyRepositoryTest {
 
 
     @Test
-    public void getAgenciesByNameNative () {
+    public void SHOULD_RETURN_LIST_OF_AGENCIES_BY_NAME () {
         String NAME = "Agence 2" ;
         List<Agency> agencies = agencyRepository.getAgencyByNameNative(NAME);
 
@@ -112,7 +112,7 @@ class AgencyRepositoryTest {
     }
 
     @Test
-    public void getAgencyByID () throws Exception {
+    public void SHOULD_RETURN_AGENCY_BY_ID () throws Exception {
         Long ID = agencyRepository.findAll().get(0).getAgenceId();
 
         Agency agency = agencyRepository.getAgencyByItsId(ID).orElseThrow(() -> new Exception("EMPTY LIST OF AGENCIES"));
