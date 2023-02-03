@@ -82,7 +82,6 @@ class TechnicianRepositoryTest {
               .personalPhoneNumber("541233398842")
               .Zone("H")
               .speciality("electrique")
-              .isAvailable(false)
               .build();
 
 
@@ -99,13 +98,16 @@ class TechnicianRepositoryTest {
     @Test
     public void SHOULD_RETURN_LIST_TECHNICIANS_AND_ASSERT_SIZE() {
       List<Technician> technicians = technicianRepository.findAll();
-
+      assertThat(technicians).isNotNull();
       assertThat(technicians.size()).isEqualTo(5);
     }
 
     @Test
     public void SHOULD_RETURN_LIST_TECHNICIANS_WITH_NULL_ISAVAILABLE () {
         List<Technician> technicians = technicianRepository.findByIsAvailableIsNull();
+
+        assertThat(technicians).isNotNull();
+        assertThat(technicians.size() > 0).isTrue();
 
 
         technicians.forEach(

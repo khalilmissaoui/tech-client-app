@@ -54,9 +54,21 @@ class AgencyRepositoryTest {
 
     }
 
+
+
+    @Test
+    public void SHOULD_RETURN_LIST_TECHNICIANS_AND_ASSERT_SIZE() {
+        List<Agency> agencies = agencyRepository.findAll();
+        assertThat(agencies).isNotNull();
+        assertThat(agencies.size()).isEqualTo(4);
+    }
     @Test
     public void SHOULD_RETURN_LIST_OF_AGENCIES_WITH_DESCRIPTIONS_NOT_NULL () {
         List<Agency> agencies = agencyRepository.findByDescriptionNotNull();
+
+        assertThat(agencies).isNotNull();
+
+        assertThat(agencies.size() > 0).isTrue();
 
 
         agencies.stream().forEach(
@@ -74,6 +86,10 @@ class AgencyRepositoryTest {
         List<Agency> agencies = agencyRepository.findByLocalisation(LOCATION);
 
 
+        assertThat(agencies).isNotNull();
+
+        assertThat(agencies.size() > 0).isTrue();
+
 
         agencies.stream().forEach(
                 agency -> assertThat(agency.getLocalisation().equals(LOCATION)).isTrue()
@@ -86,6 +102,10 @@ class AgencyRepositoryTest {
     public void SHOULD_RETURN_LIST_OF_AGENCIES_CONTAINS_NAME () {
         String NAME = "1" ;
         List<Agency> agencies = agencyRepository.findByNameContaining(NAME);
+
+        assertThat(agencies).isNotNull();
+
+        assertThat(agencies.size() > 0).isTrue();
 
 
 
@@ -102,6 +122,8 @@ class AgencyRepositoryTest {
         String NAME = "Agence 2" ;
         List<Agency> agencies = agencyRepository.getAgencyByNameNative(NAME);
 
+        assertThat(agencies).isNotNull();
+        assertThat(agencies.size() > 0).isTrue();
 
 
         agencies.stream().forEach(
@@ -116,8 +138,6 @@ class AgencyRepositoryTest {
         Long ID = agencyRepository.findAll().get(0).getAgenceId();
 
         Agency agency = agencyRepository.getAgencyByItsId(ID).orElseThrow(() -> new Exception("EMPTY LIST OF AGENCIES"));
-
-
 
         assertThat(agency.getAgenceId().equals(ID)).isTrue();
 
