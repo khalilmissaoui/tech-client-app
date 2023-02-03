@@ -27,7 +27,7 @@ class TechnicianRepositoryTest {
 
 
   @BeforeAll
-    public void saveTechnician() throws Exception {
+    public void SHOULD_SAVE_TECHNICIAN_DATA_IN_DB() throws Exception {
 
 
         Technician tech1 = Technician.builder()
@@ -97,14 +97,14 @@ class TechnicianRepositoryTest {
     }
 
     @Test
-    public void getListOfTechs() {
+    public void SHOULD_RETURN_LIST_TECHNICIANS_AND_ASSERT_SIZE() {
       List<Technician> technicians = technicianRepository.findAll();
 
       assertThat(technicians.size()).isEqualTo(5);
     }
 
     @Test
-    public void getTechBlurryStateList () {
+    public void SHOULD_RETURN_LIST_TECHNICIANS_WITH_NULL_ISAVAILABLE () {
         List<Technician> technicians = technicianRepository.findByIsAvailableIsNull();
 
 
@@ -118,7 +118,7 @@ class TechnicianRepositoryTest {
 
 
     @Test()
-    public void setTechStateToAvailable () throws Exception {
+    public void SHOULD_RETURN_FIRST_TECHNICIAN_WITH_ISAVAILABLE_FALSE_OR_THROW_EXCEPTION () throws Exception {
         Technician technician = technicianRepository.findFirstByIsAvailableIsFalse().orElseThrow(() -> new Exception("TECH not found"));
 
         Long ID = technician.getTechId();
@@ -137,7 +137,7 @@ class TechnicianRepositoryTest {
     }
 
     @Test()
-    public void setTechStateToUnavailable () throws Exception {
+    public void SHOULD_RETURN_FIRST_TECHNICIAN_WITH_ISAVAILABLE_TRUE_OR_THROW_EXCEPTION () throws Exception {
         Technician technician = technicianRepository.findFirstByIsAvailableIsTrue().orElseThrow(() -> new Exception("TECH not found"));
 
         Long ID = technician.getTechId();
