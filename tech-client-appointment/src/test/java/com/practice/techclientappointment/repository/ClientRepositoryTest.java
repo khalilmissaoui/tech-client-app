@@ -50,40 +50,35 @@ class ClientRepositoryTest {
 
     @Test
     public void SHOULD_RETURN_SLICE_OF_CLIENTS_AND_CHECK_IF_CLIENT_EXIST_BY_TYPE() {
-
+        //GIVEN DATA
         String SEARCHED_CLIENT_TYPE="agency 12";
-
         int listLength = 3 ;
         Slice<Client> slice = null;
         Pageable pageable = PageRequest.of(0, listLength);
 
+
         while (true) {
+
+            // WHEN
             slice = clientRepository.findAll(pageable);
             List<Client> clientsList = slice.getContent();
 
-
+            //THEN
             assertTrue(clientsList.size() == listLength );
 
+
             Boolean SuscpectedCleint = clientsList.stream().anyMatch(client -> client.getType().equalsIgnoreCase(SEARCHED_CLIENT_TYPE));
-
             if (SuscpectedCleint){
-
                 log.info("CLIENTS are collected");
-
                 break;
             }
-
             if (!slice.hasNext()) {
                 log.info("END OF LIST OF PAGES");
                 break;
-
             }
 
             pageable = slice.nextPageable();
         }
-
-
-
 
     }
 }
