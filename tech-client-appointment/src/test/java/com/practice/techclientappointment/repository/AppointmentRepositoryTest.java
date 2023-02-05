@@ -64,23 +64,16 @@ class AppointmentRepositoryTest {
     @Test
     public void SHOULD_THROWS_EXCEPTION_WITHOUT_TECH_ASSIGNED(){
 
-
+        //GIVEN DATA
         Address address = Address.builder()
                 .city("paris" )
                 .houseNumber("3")
                 .street("Street")
                 .build();
-
         Client client = Client.builder()
                 .type("Agency")
                 .address(address )
                 .build();
-
-
-
-
-
-
         Appointment appointment = Appointment
                 .builder()
                 .price("324 £")
@@ -88,7 +81,7 @@ class AppointmentRepositoryTest {
                 .build();
 
 
-
+        //THEN
         assertThrows(org.springframework.dao.DataIntegrityViolationException.class , () -> appointmentRepository.save(appointment));
 
 
@@ -98,7 +91,7 @@ class AppointmentRepositoryTest {
     public void SHOULD_THROWS_EXCEPTION_WITHOUT_CLIENT_ASSIGNED(){
 
 
-
+        //GIVEN DATA
         Technician tech = Technician.builder()
                 .firstName("tech4")
                 .lastName("juan")
@@ -108,11 +101,6 @@ class AppointmentRepositoryTest {
                 .speciality("electrique")
                 .isAvailable(true)
                 .build();
-
-
-
-
-
         Appointment appointment = Appointment
                 .builder()
                 .price("324 £")
@@ -120,7 +108,7 @@ class AppointmentRepositoryTest {
                 .build();
 
 
-
+        //THEN
         assertThrows(org.springframework.dao.DataIntegrityViolationException.class , () -> appointmentRepository.save(appointment));
 
 
