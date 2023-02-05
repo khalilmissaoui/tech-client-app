@@ -57,19 +57,25 @@ class AgencyRepositoryTest {
 
     @Test
     public void SHOULD_RETURN_LIST_TECHNICIANS_AND_ASSERT_SIZE() {
+
+        // WHEN
         List<Agency> agencies = agencyRepository.findAll();
+
+        //THEN
         assertThat(agencies).isNotNull();
   //      assertThat(agencies.size()).isEqualTo(4);
     }
     @Test
     public void SHOULD_RETURN_LIST_OF_AGENCIES_WITH_DESCRIPTIONS_NOT_NULL () {
+
+
+        // WHEN
         List<Agency> agencies = agencyRepository.findByDescriptionNotNull();
 
+
+        //THEN
         assertThat(agencies).isNotNull();
-
         assertThat(agencies.size() > 0).isTrue();
-
-
         agencies.stream().forEach(
                 agency -> assertThat(agency.getDescription()).isNotNull()
         );
@@ -100,15 +106,14 @@ class AgencyRepositoryTest {
 
     @Test
     public void SHOULD_RETURN_LIST_OF_AGENCIES_CONTAINS_NAME () {
+
+        //GIVEN DATA
         String NAME = "1" ;
+
+        // WHEN
         List<Agency> agencies = agencyRepository.findByNameContaining(NAME);
-
         assertThat(agencies).isNotNull();
-
         assertThat(agencies.size() > 0).isTrue();
-
-
-
         agencies.stream().forEach(
                 agency -> assertThat(agency.getName().contains(NAME)).isTrue()
         );
@@ -119,13 +124,15 @@ class AgencyRepositoryTest {
 
     @Test
     public void SHOULD_RETURN_LIST_OF_AGENCIES_BY_NAME () {
+        //GIVEN DATA
         String NAME = "Agence 2" ;
+
+        // WHEN
         List<Agency> agencies = agencyRepository.getAgencyByNameNative(NAME);
 
+        //THEN
         assertThat(agencies).isNotNull();
         assertThat(agencies.size() > 0).isTrue();
-
-
         agencies.stream().forEach(
                 agency -> assertThat(agency.getName().contains(NAME)).isTrue()
         );
@@ -135,10 +142,13 @@ class AgencyRepositoryTest {
 
     @Test
     public void SHOULD_RETURN_AGENCY_BY_ID () throws Exception {
+        //GIVEN DATA
         Long ID = agencyRepository.findAll().get(0).getAgenceId();
 
+        // WHEN
         Agency agency = agencyRepository.getAgencyByItsId(ID).orElseThrow(() -> new Exception("EMPTY LIST OF AGENCIES"));
 
+        //THEN
         assertThat(agency.getAgenceId().equals(ID)).isTrue();
 
         log.info("--agency ID is  --> :"+agency.getAgenceId());
