@@ -97,19 +97,24 @@ class TechnicianRepositoryTest {
 
     @Test
     public void SHOULD_RETURN_LIST_TECHNICIANS_AND_ASSERT_SIZE() {
+
+      //WHEN
       List<Technician> technicians = technicianRepository.findAll();
+
+      //THEN
       assertThat(technicians).isNotNull();
       assertThat(technicians.size()).isEqualTo(5);
     }
 
     @Test
     public void SHOULD_RETURN_LIST_TECHNICIANS_WITH_NULL_ISAVAILABLE () {
+
+        //WHEN
         List<Technician> technicians = technicianRepository.findByIsAvailableIsNull();
 
+        //THEN
         assertThat(technicians).isNotNull();
         assertThat(technicians.size() > 0).isTrue();
-
-
         technicians.forEach(
                 technician -> assertThat(technician.getIsAvailable()).isNull()
         );
@@ -121,16 +126,16 @@ class TechnicianRepositoryTest {
 
     @Test()
     public void SHOULD_RETURN_FIRST_TECHNICIAN_WITH_ISAVAILABLE_FALSE_OR_THROW_EXCEPTION () throws Exception {
+
+        //WHEN
         Technician technician = technicianRepository.findFirstByIsAvailableIsFalse().orElseThrow(() -> new Exception("TECH not found"));
 
+        //GIVEN
         Long ID = technician.getTechId();
 
+        //THEN
         assertThat(technician.getIsAvailable().compareTo(Boolean.TRUE)).isEqualTo(-1);
-
-
-
         technicianRepository.updateTechStateToAvailable(ID);
-
         assertThat(technicianRepository.findByTechId(ID).isPresent()).isTrue();
 
 
@@ -140,14 +145,16 @@ class TechnicianRepositoryTest {
 
     @Test()
     public void SHOULD_RETURN_FIRST_TECHNICIAN_WITH_ISAVAILABLE_TRUE_OR_THROW_EXCEPTION () throws Exception {
+
+        //WHEN
         Technician technician = technicianRepository.findFirstByIsAvailableIsTrue().orElseThrow(() -> new Exception("TECH not found"));
 
+        //GIVEN
         Long ID = technician.getTechId();
 
+        //THEN
         assertThat(technician.getIsAvailable()).isTrue();
-
         technicianRepository.updateTechStateToUnavailable(ID);
-
         assertThat(technicianRepository.findByTechId(ID).isPresent()).isTrue();
 
 
