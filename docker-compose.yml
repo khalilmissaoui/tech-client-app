@@ -9,9 +9,6 @@ services:
       MYSQL_PASSWORD: password
       MYSQL_ROOT_PASSWORD: password
 
-
-    volumes:
-      - database-mysql:/var/lib/mysql
     ports:
       - "3306:3306"
     expose:
@@ -29,8 +26,3 @@ services:
       - SPRING_PROFILES_ACTIVE=docker
     depends_on:
       - database-mysql
-
-
-volumes:
-  database-mysql:
-    driver: local
