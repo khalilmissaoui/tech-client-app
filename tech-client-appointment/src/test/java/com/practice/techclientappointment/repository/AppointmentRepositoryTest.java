@@ -6,15 +6,20 @@ import org.assertj.core.util.DateUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 
 @DataJpaTest
 @Slf4j
+@ActiveProfiles("test")
 class AppointmentRepositoryTest {
     @Autowired
     private AppointmentRepository appointmentRepository;
+
+    @Autowired
+    private TechnicianRepository technicianRepository;
 
 
     @Test
@@ -110,6 +115,16 @@ class AppointmentRepositoryTest {
 
         //THEN
         assertThrows(org.springframework.dao.DataIntegrityViolationException.class , () -> appointmentRepository.save(appointment));
+
+
+    }
+
+
+    @Test
+    public void SHOULD_RETURN_LIST_OF_TECHNICIANS(){
+
+        Technician technician = technicianRepository.findFirstByIsAvailableIsFalse().orElseThrow( () -> new RuntimeException("NOT FOUND") );
+
 
 
     }
