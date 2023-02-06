@@ -5,7 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
-
+import java.util.List;
 
 
 @Data
@@ -16,7 +16,7 @@ import javax.persistence.*;
 @Table( name = "T_AGENCE")
 public class Agency {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long agenceId;
 
     private String localisation;
@@ -29,6 +29,12 @@ public class Agency {
 
 
     private String description ;
+
+    @OneToMany(
+            cascade = CascadeType.ALL,
+            mappedBy = "agency"
+    )
+    List<Technician> technicians;
 
 
 

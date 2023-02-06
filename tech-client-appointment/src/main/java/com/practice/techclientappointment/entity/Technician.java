@@ -25,7 +25,7 @@ import java.util.List;
 public class Technician {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long techId;
 
     private String firstName ;
@@ -51,15 +51,12 @@ public class Technician {
     private Boolean isAvailable;
 
 
-    @ManyToOne(
-            cascade = CascadeType.ALL
-    )
-    @JoinColumn(
-            name = "agency_id",
-            referencedColumnName = "agenceId"
-    )
+    @ManyToOne()
     private Agency agency;
 
-    @OneToMany()
+    @OneToMany(
+            cascade = CascadeType.ALL,
+            mappedBy = "technician"
+    )
     private List<Appointment>  appointment;
 }

@@ -3,21 +3,26 @@ package com.practice.techclientappointment.repository;
 import com.practice.techclientappointment.entity.*;
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.util.DateUtil;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 
 @DataJpaTest
 @Slf4j
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@ActiveProfiles("test")
 class AppointmentRepositoryTest {
     @Autowired
     private AppointmentRepository appointmentRepository;
 
 
-    @Test
+    @BeforeAll
     public void SHOULD_SAVE_TEST_APPOINTMENTS_DATA_IN_DB(){
 
 

@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -23,6 +24,12 @@ public class Client {
 
     @Embedded
     private Address address;
+
+    @OneToMany(
+            cascade = CascadeType.ALL,
+            mappedBy = "client"
+    )
+    private List<Appointment> appointment;
 
 
 
