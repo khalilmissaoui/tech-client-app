@@ -18,8 +18,6 @@ class AppointmentRepositoryTest {
     @Autowired
     private AppointmentRepository appointmentRepository;
 
-    @Autowired
-    private TechnicianRepository technicianRepository;
 
 
     @Test
@@ -119,14 +117,5 @@ class AppointmentRepositoryTest {
 
     }
 
-
-    @Test
-    public void SHOULD_RETURN_LIST_OF_TECHNICIANS(){
-
-        Technician technician = technicianRepository.findFirstByIsAvailableIsFalse().orElseThrow( () -> new RuntimeException("NOT FOUND") );
-
-
-
-    }
 
 }
