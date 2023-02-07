@@ -16,30 +16,71 @@ public class AppointmentService  {
 
 
 
-    public Appointment add_appointment(Appointment appointment) {
+    public Appointment addAppointment(Appointment appointment) {
 
-        return appointmentRepository.save(appointment);
+        try {
+            return appointmentRepository.save(appointment);
+
+        }catch (Exception ex){
+            // IMPROVE USE CUSTOM EXCEPTION
+            throw new RuntimeException("APPOINTMENT NOT SAVED");
+        }
     }
 
+    public Appointment findAppointmentById(Long id){
 
-    public List<Appointment> findAll() {
+        //Improvement -- use DTO
+        return returnAppointmentIfExistById(id);
+    }
+
+    public List<Appointment> findAllAppointments() {
+
+        //Improvement -- use DTO
         return appointmentRepository.findAll();
     }
 
-    public List<Appointment> findByTechnician(Long id) {
-        return appointmentRepository.findByTechnicainId(id);
+    public List<Appointment> findAppointmentByTechnicianId(Long id) {
+
+        //Improvement -- use DTO
+        //Improvement -- check if tech exist and find by tech instead of id
+        return appointmentRepository.findByTechId(id);
     }
 
 
-    public List<Appointment> findByClient(Long id) {
+    public List<Appointment> findAppointmentByClientId(Long id) {
+
+        //Improvement -- check if client exist and find by client instead of id
         return appointmentRepository.findByClientId(id);
     }
 
-    public void delete_appointment(Long id) {
-        appointmentRepository.deleteById(id);
+    public Boolean deleteAppointmentById(Long id) {
+
+        try{
+            returnAppointmentIfExistById(id);
+
+            appointmentRepository.deleteById(id);
+
+            return true;
+        }
+        catch (Exception ex){
+            // improve --> throw custom exception
+            return false;
+        }
+
     }
 
-    public Appointment update_appointment (Appointment appointment) {
+    public Appointment updateAppointment(Appointment appointment) {
+
+        returnAppointmentIfExistById(appointment.getAppointmentId());
+
         return  appointmentRepository.save(appointment);
+    }
+
+
+    private Appointment returnAppointmentIfExistById (Long id) {
+        // improve --> throw custom exception
+        return appointmentRepository.findById(id).orElseThrow(
+                () -> new RuntimeException(" Error : Appointment you are trying to handle does not exist ")
+        );
     }
 }
