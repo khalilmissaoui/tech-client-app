@@ -2,22 +2,27 @@ package com.practice.techclientappointment.repository;
 
 import com.practice.techclientappointment.entity.*;
 import lombok.extern.slf4j.Slf4j;
-import org.assertj.core.util.DateUtil;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 
 @DataJpaTest
 @Slf4j
+@ActiveProfiles("test")
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class AppointmentRepositoryTest {
     @Autowired
     private AppointmentRepository appointmentRepository;
 
 
-    @Test
+
+    @BeforeAll
     public void SHOULD_SAVE_TEST_APPOINTMENTS_DATA_IN_DB(){
 
 
@@ -36,7 +41,7 @@ class AppointmentRepositoryTest {
 
         Technician tech = Technician.builder()
                 .firstName("tech4")
-                .lastName("juan")
+                .lastName("achref")
                 .phoneNumber("42342322433")
                 .personalPhoneNumber("41233398842")
                 .Zone("H")
@@ -47,9 +52,8 @@ class AppointmentRepositoryTest {
 
         Appointment appointment = Appointment
                 .builder()
-                .price("324 £")
+                .price("32000 £")
                 .technician(tech)
-                .time(DateUtil.now())
                 .client(client)
                 .build();
 
@@ -113,5 +117,6 @@ class AppointmentRepositoryTest {
 
 
     }
+
 
 }
