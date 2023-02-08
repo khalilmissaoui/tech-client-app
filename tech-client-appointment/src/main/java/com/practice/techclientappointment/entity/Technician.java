@@ -15,11 +15,11 @@ import java.util.List;
 @Builder
 @Entity
 @Table( name = "T_TECHNICIEN"
-        , uniqueConstraints = @UniqueConstraint(
+        /*, uniqueConstraints = @UniqueConstraint(
         name = "unique_attributes_tech",
         columnNames = {"number" , "personalPhoneNumber"}
         )
-
+*/
 
 )
 public class Technician {

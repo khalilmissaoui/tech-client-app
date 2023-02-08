@@ -13,7 +13,9 @@ public class AppointmentServiceIMPL implements IAppointmentService  {
     @Autowired
     private AppointmentRepository appointmentRepository;
 
-
+    //add validation of data
+    //starter validation avec assertj qlq methode
+    //annotation de validation de startup validation
 
     public Appointment addAppointment(Appointment appointment) {
 
@@ -32,7 +34,6 @@ public class AppointmentServiceIMPL implements IAppointmentService  {
     public List<Appointment> findAllAppointments() {
 
         // return a list of appointments
-
         //Improvement -- use DTO
         return appointmentRepository.findAll();
     }
@@ -53,9 +54,7 @@ public class AppointmentServiceIMPL implements IAppointmentService  {
 
         return appointmentRepository.findByClientId(id);
     }
-    //add validation of data
-    //starter validation avec assertj qlq methode
-    // annotation de validation de startup validation
+
     public void deleteAppointmentById(Long id) {
 
         //use Long param id to delete an appointment
