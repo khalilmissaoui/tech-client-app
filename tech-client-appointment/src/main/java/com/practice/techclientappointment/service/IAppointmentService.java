@@ -14,8 +14,7 @@ public interface IAppointmentService {
 
     List<Appointment> findAppointmentByClientId(Long id);
 
-    Boolean deleteAppointmentById(Long id);
-
+    void deleteAppointmentById(Long id);
 
     Appointment updateAppointment(Appointment appointment);
 }
