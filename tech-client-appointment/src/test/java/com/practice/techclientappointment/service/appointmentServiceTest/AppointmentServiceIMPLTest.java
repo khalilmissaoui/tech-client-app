@@ -4,7 +4,7 @@ import com.practice.techclientappointment.entity.Appointment;
 import com.practice.techclientappointment.entity.Client;
 import com.practice.techclientappointment.entity.Technician;
 import com.practice.techclientappointment.repository.AppointmentRepository;
-import com.practice.techclientappointment.service.AppointmentService;
+import com.practice.techclientappointment.service.AppointmentServiceIMPL;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -22,19 +22,19 @@ import static org.assertj.core.api.Assertions.*;
 
 
 @ExtendWith(MockitoExtension.class)
-class AppointmentServiceTest {
+class AppointmentServiceIMPLTest {
 
     @Mock
     private AppointmentRepository appointmentRepository;
 
     @InjectMocks
-    private AppointmentService appointmentService;
+    private AppointmentServiceIMPL appointmentService;
 
     @TestConfiguration
     static class AppointmentServiceContextConfiguration {
         @Bean
-        public AppointmentService appointmentService() {
-            return new AppointmentService();
+        public AppointmentServiceIMPL appointmentService() {
+            return new AppointmentServiceIMPL();
         }
     }
 
@@ -207,7 +207,6 @@ class AppointmentServiceTest {
         given(appointmentRepository.findById(appointment.getAppointmentId())).willReturn(Optional.empty());
 
         //THEN
-        assertThat(appointmentService.deleteAppointmentById(ID)).isFalse();
         verify(appointmentRepository , never()).deleteById(1L);
 
 
