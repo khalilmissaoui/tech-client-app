@@ -38,8 +38,6 @@ public class Technician {
     )
     private String phoneNumber ;
 
-
-
     private String personalPhoneNumber ;
 
     private String speciality ;
