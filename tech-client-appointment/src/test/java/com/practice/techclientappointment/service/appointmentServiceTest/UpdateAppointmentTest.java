@@ -4,7 +4,7 @@ import com.practice.techclientappointment.entity.Appointment;
 import com.practice.techclientappointment.entity.Client;
 import com.practice.techclientappointment.entity.Technician;
 import com.practice.techclientappointment.repository.AppointmentRepository;
-import com.practice.techclientappointment.service.AppointmentService;
+import com.practice.techclientappointment.service.AppointmentServiceIMPL;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -21,26 +21,26 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.BDDMockito.given;
 
 @ExtendWith(MockitoExtension.class)
-public class SHOULD_UPDATE_APPOINTMENT_TEST {
-
+public class UpdateAppointmentTest {
+//update name to methode name
     @Mock
     private AppointmentRepository appointmentRepository;
 
     @InjectMocks
-    private AppointmentService appointmentService;
+    private AppointmentServiceIMPL appointmentService;
 
     @TestConfiguration
     static class AppointmentServiceContextConfiguration {
         @Bean
-        public AppointmentService appointmentService() {
-            return new AppointmentService();
+        public AppointmentServiceIMPL appointmentService() {
+            return new AppointmentServiceIMPL();
         }
     }
 
 
 
     @Test
-    void SHOULD_FIND_APPOINTMENT_BY_ID_AND_UPDATE_APPOINTMENT() {
+    void SHOULD_FIND_APPOINTMENT_AND_UPDATE_IT_BY_ID() {
         Client client = Client.builder()
                 .clientId(6L)
                 .type("Agency x")
@@ -59,11 +59,14 @@ public class SHOULD_UPDATE_APPOINTMENT_TEST {
 
         Appointment appointment = Appointment.builder().appointmentId(2L).price("323 £").time(new Date()).client(client).technician(tech).build();
 
+//test ID APP.id
 
-
-        given(appointmentRepository.findById(appointment.getAppointmentId())).willReturn(Optional.of(appointment));
-        given(appointmentRepository.save(appointment)).willReturn(appointment);
-        assertThat(appointmentService.updateAppointment(appointment)).isEqualTo(appointment);
+        given(appointmentRepository.findById(appointment.getAppointmentId()))
+                .willReturn(Optional.of(appointment));
+        given(appointmentRepository.save(appointment))
+                .willReturn(appointment);
+        assertThat(appointmentService.updateAppointment(appointment))
+                .isEqualTo(appointment);
 
     }
 
