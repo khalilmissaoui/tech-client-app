@@ -10,7 +10,7 @@ import java.util.List;
 
 @Service
 @Transactional
-public class AppointmentService  {
+public class AppointmentServiceIMPL implements IAppointmentService  {
     @Autowired
     private AppointmentRepository appointmentRepository;
 
@@ -18,15 +18,13 @@ public class AppointmentService  {
 
     public Appointment addAppointment(Appointment appointment) {
 
-        try {
+
             return appointmentRepository.save(appointment);
 
-        }catch (Exception ex){
-            // IMPROVE USE CUSTOM EXCEPTION
-            throw new RuntimeException("APPOINTMENT NOT SAVED");
-        }
+
     }
 
+    //try catch au niveau du controlleur
     public Appointment findAppointmentById(Long id){
 
         //Improvement -- use DTO
@@ -52,32 +50,25 @@ public class AppointmentService  {
         //Improvement -- check if client exist and find by client instead of id
         return appointmentRepository.findByClientId(id);
     }
+    //add validation of data
+    //starter validation avec assertj qlq methode
+    // annotation de validation de startup validation
+    public void deleteAppointmentById(Long id) {
 
-    public Boolean deleteAppointmentById(Long id) {
 
-        try{
             returnAppointmentIfExistById(id);
-
             appointmentRepository.deleteById(id);
 
-            return true;
-        }
-        catch (Exception ex){
-            // improve --> throw custom exception
-            return false;
-        }
-
     }
-
+// un petit commentaire pour une idee general - regles metier specifique - condition - work flow
     public Appointment updateAppointment(Appointment appointment) {
 
         returnAppointmentIfExistById(appointment.getAppointmentId());
-
         return  appointmentRepository.save(appointment);
     }
 
 
-    private Appointment returnAppointmentIfExistById (Long id) {
+    private Appointment returnAppointmentIfExistById (Long id) throws RuntimeException{
         // improve --> throw custom exception
         return appointmentRepository.findById(id).orElseThrow(
                 () -> new RuntimeException(" Error : Appointment you are trying to handle does not exist ")
