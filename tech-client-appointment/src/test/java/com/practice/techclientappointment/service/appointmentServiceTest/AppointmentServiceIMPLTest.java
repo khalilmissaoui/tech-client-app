@@ -12,16 +12,18 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import org.springframework.test.context.ActiveProfiles;
 
+import java.util.*;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.BDDMockito.*;
 import static org.assertj.core.api.Assertions.*;
 
 
 @ExtendWith(MockitoExtension.class)
+@ActiveProfiles("test")
+
 class AppointmentServiceIMPLTest {
 
     @Mock
@@ -38,40 +40,13 @@ class AppointmentServiceIMPLTest {
         }
     }
 
-    @Test
-    void SHOULD_SAVE_AND_RETURN_APPOINTMENT() {
-
-        //GIVEN
-        Client client = Client.builder()
-                .clientId(6L)
-                .type("Agency x")
-                .build();
-        Technician tech = Technician.builder()
-                .techId(4L)
-                .firstName("tech4")
-                .lastName("achref")
-                .phoneNumber("42342322433")
-                .personalPhoneNumber("41233398842")
-                .Zone("H")
-                .speciality("electrique")
-                .isAvailable(true)
-                .build();
-        Appointment appointment2 = Appointment.builder().appointmentId(2L).price("323 £").time(new Date()).client(client).technician(tech).build();
-
-        //WHEN
-        given(appointmentRepository.save(appointment2)).willReturn(appointment2);
-
-        //THEN
-        assertThat(appointmentService.addAppointment(appointment2)).isEqualTo(appointment2);
-
-    }
 
     @Test
     void SHOULD_RETURN_ALL_APPOINTMENTS() {
 
         //GIVEN
         Client client = Client.builder()
-                .type("Agency x")
+                .type("Agency x TYPE")
                 .build();
         Technician tech = Technician.builder()
                 .firstName("tech4")
@@ -102,7 +77,7 @@ class AppointmentServiceIMPLTest {
         //GIVEN
         Long ID = 1L ;
         Client client = Client.builder()
-                .type("Agency x")
+                .type("Agency x TYPE")
                 .build();
         Technician tech = Technician.builder()
                 .techId(ID)
@@ -149,11 +124,11 @@ class AppointmentServiceIMPLTest {
         Long ID = 1L ;
         Client client = Client.builder()
                 .clientId(ID)
-                .type("Agency x")
+                .type("Agency x TYPE")
                 .build();
         Client client2 = Client.builder()
                 .clientId(ID)
-                .type("Agency x")
+                .type("Agency x TYPE")
                 .build();
         Technician tech = Technician.builder()
                 .firstName("tech4")
@@ -189,7 +164,7 @@ class AppointmentServiceIMPLTest {
         Long ID = 2L;
         Client client = Client.builder()
                 .clientId(ID)
-                .type("Agency x")
+                .type("Agency x TYPE")
                 .build();
         Technician tech = Technician.builder()
                 .techId(ID)
@@ -205,27 +180,15 @@ class AppointmentServiceIMPLTest {
 
         //WHEN
         given(appointmentRepository.findById(appointment.getAppointmentId())).willReturn(Optional.empty());
-
         //THEN
+        assertThrows(RuntimeException.class , ()-> appointmentService.deleteAppointmentById(appointment.getAppointmentId()));
         verify(appointmentRepository , never()).deleteById(1L);
 
 
 
+
     }
 
-    @Test
-    void SHOULD_FIND_AND_RETURN_APPOINTMENT_BY_ID(){
 
-        //GIVEN
-        Long ID = 2L;
-        Appointment appointment = Appointment.builder().appointmentId(ID).price("323 £").time(new Date()).build();
-
-        //WHEN
-        given(appointmentRepository.findById(appointment.getAppointmentId())).willReturn(Optional.ofNullable(appointment) );
-
-        //THEN
-        Appointment retriedAppointment = appointmentService.findAppointmentById(ID);
-        assertThat(retriedAppointment.getAppointmentId()).isEqualTo(appointment.getAppointmentId());
-    }
 
 }

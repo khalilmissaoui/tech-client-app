@@ -1,5 +1,6 @@
 package com.practice.techclientappointment.entity;
 
+import com.practice.techclientappointment.util.clientType.ClientTypeConstraint;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,6 +20,7 @@ public class Client {
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Long clientId;
 
+    @ClientTypeConstraint
     private String type;
 
     @Embedded

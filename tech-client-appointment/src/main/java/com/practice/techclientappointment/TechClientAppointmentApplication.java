@@ -46,7 +46,7 @@ public class TechClientAppointmentApplication {
 			Technician tech1 = Technician.builder()
 					.firstName("rami")
 					.lastName("petit")
-					.phoneNumber("14247733")
+					.phoneNumber("142497733")
 					.personalPhoneNumber("1772398842")
 					.Zone("C")
 					.speciality("electrique")
@@ -56,8 +56,8 @@ public class TechClientAppointmentApplication {
 			Technician tech2 = Technician.builder()
 					.firstName("tech2")
 					.lastName("last2")
-					.phoneNumber("2342399")
-					.personalPhoneNumber("2328842")
+					.phoneNumber("234239999")
+					.personalPhoneNumber("232998842")
 					.Zone("D")
 					.speciality("batiment")
 					.isAvailable(false)
@@ -76,7 +76,7 @@ public class TechClientAppointmentApplication {
 						.build();
 
 				Client client = Client.builder()
-						.type("Agency "+ i)
+						.type("Agency"+ i + "TYPE")
 						.address(address )
 						.build();
 				clientRepository.save(client);

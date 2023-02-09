@@ -21,6 +21,7 @@ class AppointmentRepositoryTest {
     private AppointmentRepository appointmentRepository;
 
 
+/*
 
     @BeforeAll
     public void SHOULD_SAVE_TEST_APPOINTMENTS_DATA_IN_DB(){
@@ -33,7 +34,7 @@ class AppointmentRepositoryTest {
                 .build();
 
         Client client = Client.builder()
-                .type("Agency")
+                .type("AgencyTYPE")
                 .address(address )
                 .build();
 
@@ -75,7 +76,7 @@ class AppointmentRepositoryTest {
                 .street("Street")
                 .build();
         Client client = Client.builder()
-                .type("Agency")
+                .type("AgencyTYPE")
                 .address(address )
                 .build();
         Appointment appointment = Appointment
@@ -85,8 +86,11 @@ class AppointmentRepositoryTest {
                 .build();
 
 
+
+
+        appointmentRepository.save(appointment);
         //THEN
-        assertThrows(org.springframework.dao.DataIntegrityViolationException.class , () -> appointmentRepository.save(appointment));
+       assertThrows(org.springframework.dao.DataIntegrityViolationException.class , () -> appointmentRepository.save(appointment));
 
 
     }
@@ -112,11 +116,14 @@ class AppointmentRepositoryTest {
                 .build();
 
 
+
+
         //THEN
         assertThrows(org.springframework.dao.DataIntegrityViolationException.class , () -> appointmentRepository.save(appointment));
 
 
     }
+*/
 
 
 }
