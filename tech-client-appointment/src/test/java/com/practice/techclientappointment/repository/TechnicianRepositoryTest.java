@@ -30,14 +30,14 @@ class TechnicianRepositoryTest {
 
 
   @BeforeAll
-    public void SHOULD_SAVE_TECHNICIAN_DATA_IN_DB() throws Exception {
+    public void SHOULD_SAVE_TECHNICIAN_DATA_IN_DB()  {
 
 
         Technician tech1 = Technician.builder()
                 .firstName("rami")
                 .lastName("petit")
-                .phoneNumber("14247733")
-                .personalPhoneNumber("1772398842")
+                .phoneNumber("142477335")
+                .personalPhoneNumber("177992398")
                 .Zone("C")
                 .speciality("electrique")
                 .isAvailable(true)
@@ -47,8 +47,8 @@ class TechnicianRepositoryTest {
         Technician tech2 = Technician.builder()
                 .firstName("tech2")
                 .lastName("last2")
-                .phoneNumber("2342399")
-                .personalPhoneNumber("2328842")
+                .phoneNumber("234992399")
+                .personalPhoneNumber("232998842")
                 .Zone("D")
                 .speciality("batiment")
 
@@ -59,8 +59,8 @@ class TechnicianRepositoryTest {
         Technician tech3 = Technician.builder()
                 .firstName("tech3")
                 .lastName("bernat")
-                .phoneNumber("34200033")
-                .personalPhoneNumber("3233000842")
+                .phoneNumber("342090033")
+                .personalPhoneNumber("3239900842")
                 .Zone("B")
                 .speciality("electrique")
 
@@ -71,8 +71,8 @@ class TechnicianRepositoryTest {
         Technician tech4 = Technician.builder()
                 .firstName("tech4")
                 .lastName("juan")
-                .phoneNumber("42342322433")
-                .personalPhoneNumber("41233398842")
+                .phoneNumber("4234224393")
+                .personalPhoneNumber("4123998842")
                 .Zone("H")
                 .speciality("electrique")
                 .isAvailable(true)
@@ -81,8 +81,8 @@ class TechnicianRepositoryTest {
       Technician tech5 = Technician.builder()
               .firstName("tech5")
               .lastName("leonardo")
-              .phoneNumber("542342322433")
-              .personalPhoneNumber("541233398842")
+              .phoneNumber("5423429933")
+              .personalPhoneNumber("541298842")
               .Zone("H")
               .speciality("electrique")
               .build();

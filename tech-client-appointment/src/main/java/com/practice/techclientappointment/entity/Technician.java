@@ -1,6 +1,7 @@
 package com.practice.techclientappointment.entity;
 
 
+import com.practice.techclientappointment.util.phoneNumber.ContactNumberConstraint;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -36,8 +37,10 @@ public class Technician {
             name = "number",
             nullable = false
     )
+    @ContactNumberConstraint
     private String phoneNumber ;
 
+    @ContactNumberConstraint
     private String personalPhoneNumber ;
 
     private String speciality ;
