@@ -8,6 +8,9 @@ import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.util.List;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+
+
 @Service
 @Transactional
 public class AppointmentServiceIMPL implements IAppointmentService  {
@@ -28,6 +31,9 @@ public class AppointmentServiceIMPL implements IAppointmentService  {
     public Appointment findAppointmentById(Long id){
 
         //use Long param id to find and return an appointment
+
+        assertThat(id).isNotNull();
+
         //Improvement -- use DTO
         return returnAppointmentIfExistById(id);
     }
@@ -42,6 +48,7 @@ public class AppointmentServiceIMPL implements IAppointmentService  {
     public List<Appointment> findAppointmentByTechnicianId(Long id) {
 
         // return a list of appointments from db filtered by technician id (Long)
+        assertThat(id).isNotNull();
 
         //Improvement -- use DTO
         //Improvement -- check if tech exist and find by tech instead of id
@@ -50,6 +57,7 @@ public class AppointmentServiceIMPL implements IAppointmentService  {
 
 
     public List<Appointment> findAppointmentByClientId(Long id) {
+        assertThat(id).isNotNull();
 
         // return a list of appointments from db filtered by client id (Long)
 
@@ -59,6 +67,7 @@ public class AppointmentServiceIMPL implements IAppointmentService  {
     public void deleteAppointmentById(Long id) {
 
         //use Long param id to delete an appointment
+        assertThat(id).isNotNull();
 
         returnAppointmentIfExistById(id);
             appointmentRepository.deleteById(id);
@@ -75,6 +84,8 @@ public class AppointmentServiceIMPL implements IAppointmentService  {
 
     private Appointment returnAppointmentIfExistById (Long id) throws RuntimeException{
         // take not null appointment to update and return the updated value
+        assertThat(id).isNotNull();
+
         // improve --> throw custom exception
         return appointmentRepository.findById(id).orElseThrow(
                 () -> new RuntimeException(" Error : Appointment you are trying to handle does not exist ")
