@@ -89,7 +89,7 @@ public class AddAppointmentTest {
     }
 
     @Test
-    void SHOULD_CALL_REPOSITORY_METHODE_WITH_SAME_EXACT_PASSED_OBJECT() {
+    void SHOULD_CALL_REPOSITORY_WITH_SAME_SERVICE_OBJECT() {
 
         //GIVEN
         Client client = Client.builder()
