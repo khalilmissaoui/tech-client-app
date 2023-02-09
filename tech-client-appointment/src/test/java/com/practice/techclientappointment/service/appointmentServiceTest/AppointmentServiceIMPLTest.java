@@ -16,6 +16,7 @@ import org.springframework.test.context.ActiveProfiles;
 
 import java.util.*;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.BDDMockito.*;
 import static org.assertj.core.api.Assertions.*;
 
@@ -179,9 +180,10 @@ class AppointmentServiceIMPLTest {
 
         //WHEN
         given(appointmentRepository.findById(appointment.getAppointmentId())).willReturn(Optional.empty());
-
         //THEN
+        assertThrows(RuntimeException.class , ()-> appointmentService.deleteAppointmentById(appointment.getAppointmentId()));
         verify(appointmentRepository , never()).deleteById(1L);
+
 
 
 
