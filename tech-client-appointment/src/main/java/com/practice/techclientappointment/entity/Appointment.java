@@ -21,8 +21,7 @@ import java.util.Date;
 public class Appointment {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
-    @NotNull
-
+    @NotNull(message = "appointmentId should not be null")
     private Long appointmentId;
 
     @NotBlank(message = "price should not be empty string")
@@ -41,6 +40,8 @@ public class Appointment {
             name = "client_id",
             referencedColumnName = "clientId"
     )
+    @NotNull(message = "Client Id should not be null")
+
     private Client client;
 
     @ManyToOne(optional = false
@@ -51,6 +52,7 @@ public class Appointment {
             name = "tech_id",
             referencedColumnName = "techId"
     )
+    @NotNull(message = "tech Id should not be null")
     private Technician technician;
 
 }
