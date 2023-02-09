@@ -6,6 +6,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
 @Data
@@ -18,9 +21,12 @@ import java.util.Date;
 public class Appointment {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
+    @NotNull
 
     private Long appointmentId;
 
+    @NotBlank(message = "price should not be empty string")
+    @Size(min = 2, max = 10 , message = "price should not be less than 2 digits")
     private String price;
 
     @Temporal (TemporalType.DATE)
