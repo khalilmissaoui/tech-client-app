@@ -5,6 +5,7 @@ import com.practice.techclientappointment.repository.AppointmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
+import javax.validation.Valid;
 import java.util.List;
 
 @Service
@@ -17,7 +18,7 @@ public class AppointmentServiceIMPL implements IAppointmentService  {
     //starter validation avec assertj qlq methode
     //annotation de validation de startup validation
 
-    public Appointment addAppointment(Appointment appointment) {
+    public Appointment addAppointment(@Valid Appointment appointment) {
 
         // add not null appointment to be saved and returned
             return appointmentRepository.save(appointment);
@@ -63,7 +64,7 @@ public class AppointmentServiceIMPL implements IAppointmentService  {
             appointmentRepository.deleteById(id);
 
     }
-    public Appointment updateAppointment(Appointment appointment) {
+    public Appointment updateAppointment(@Valid Appointment appointment) {
 
         // take not null appointment to update and return the updated value
         returnAppointmentIfExistById(appointment.getAppointmentId());
