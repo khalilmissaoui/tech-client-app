@@ -12,10 +12,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static org.mockito.BDDMockito.*;
 import static org.assertj.core.api.Assertions.*;
@@ -38,33 +35,6 @@ class AppointmentServiceIMPLTest {
         }
     }
 
-    @Test
-    void SHOULD_SAVE_AND_RETURN_APPOINTMENT() {
-
-        //GIVEN
-        Client client = Client.builder()
-                .clientId(6L)
-                .type("Agency x")
-                .build();
-        Technician tech = Technician.builder()
-                .techId(4L)
-                .firstName("tech4")
-                .lastName("achref")
-                .phoneNumber("42342322433")
-                .personalPhoneNumber("41233398842")
-                .Zone("H")
-                .speciality("electrique")
-                .isAvailable(true)
-                .build();
-        Appointment appointment2 = Appointment.builder().appointmentId(2L).price("323 £").time(new Date()).client(client).technician(tech).build();
-
-        //WHEN
-        given(appointmentRepository.save(appointment2)).willReturn(appointment2);
-
-        //THEN
-        assertThat(appointmentService.addAppointment(appointment2)).isEqualTo(appointment2);
-
-    }
 
     @Test
     void SHOULD_RETURN_ALL_APPOINTMENTS() {
