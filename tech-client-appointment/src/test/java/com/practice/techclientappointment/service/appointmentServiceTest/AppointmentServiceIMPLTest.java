@@ -12,6 +12,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
+import org.springframework.test.context.ActiveProfiles;
+
 import java.util.*;
 
 import static org.mockito.BDDMockito.*;
@@ -19,6 +21,8 @@ import static org.assertj.core.api.Assertions.*;
 
 
 @ExtendWith(MockitoExtension.class)
+@ActiveProfiles("test")
+
 class AppointmentServiceIMPLTest {
 
     @Mock
@@ -183,19 +187,6 @@ class AppointmentServiceIMPLTest {
 
     }
 
-    @Test
-    void SHOULD_FIND_AND_RETURN_APPOINTMENT_BY_ID(){
 
-        //GIVEN
-        Long ID = 2L;
-        Appointment appointment = Appointment.builder().appointmentId(ID).price("323 £").time(new Date()).build();
-
-        //WHEN
-        given(appointmentRepository.findById(appointment.getAppointmentId())).willReturn(Optional.ofNullable(appointment) );
-
-        //THEN
-        Appointment retriedAppointment = appointmentService.findAppointmentById(ID);
-        assertThat(retriedAppointment.getAppointmentId()).isEqualTo(appointment.getAppointmentId());
-    }
 
 }

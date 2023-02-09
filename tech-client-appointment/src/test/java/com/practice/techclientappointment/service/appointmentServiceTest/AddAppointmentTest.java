@@ -12,6 +12,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
+import org.springframework.test.context.ActiveProfiles;
+
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
@@ -23,8 +25,9 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
+@ActiveProfiles("test")
+
 public class AddAppointmentTest {
-    //update name to methode name
     @Mock
     private AppointmentRepository appointmentRepository;
 
@@ -112,8 +115,10 @@ public class AddAppointmentTest {
         appointmentService.addAppointment(appointment);
 
         //THEN
+        // object validator
         Set<ConstraintViolation<Appointment>> violations = validator.validate(appointment);
         assertThat(violations.size()).isEqualTo(0);
+        // repository spy
         ArgumentCaptor<Appointment> appointmentArgumentCaptor =
                 ArgumentCaptor.forClass(Appointment.class);
         verify(appointmentRepository)
