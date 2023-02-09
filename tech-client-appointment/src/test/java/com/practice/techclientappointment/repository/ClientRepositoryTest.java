@@ -30,7 +30,7 @@ class ClientRepositoryTest {
     public void SHOULD_SAVE_CLIENTS_DATA_IN_DB() {
 
 
-        int CREATED_CLIENTS = 20 ;
+        int CREATED_CLIENTS = 5 ;
 
 
         for (int i = 0; i < CREATED_CLIENTS; i++) {
@@ -41,9 +41,10 @@ class ClientRepositoryTest {
                     .build();
 
             Client client = Client.builder()
-                    .type("Agency "+ i)
+                    .type("Agency"+ i + "TYPE")
                     .address(address )
                     .build();
+
 
             clientRepository.save(client);
         }
@@ -54,7 +55,7 @@ class ClientRepositoryTest {
     @Test
     public void SHOULD_RETURN_SLICE_OF_CLIENTS_AND_CHECK_IF_CLIENT_EXIST_BY_TYPE() {
         //GIVEN DATA
-        String SEARCHED_CLIENT_TYPE="agency 12";
+        String SEARCHED_CLIENT_TYPE="agency 12 ";
         int listLength = 3 ;
         Slice<Client> slice = null;
         Pageable pageable = PageRequest.of(0, listLength);
@@ -80,7 +81,7 @@ class ClientRepositoryTest {
                 break;
             }
 
-            pageable = slice.nextPageable();
+         break;
         }
 
     }

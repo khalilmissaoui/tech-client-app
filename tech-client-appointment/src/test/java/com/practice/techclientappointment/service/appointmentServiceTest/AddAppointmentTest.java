@@ -51,7 +51,7 @@ public class AddAppointmentTest {
         //GIVEN
         Client client = Client.builder()
                 .clientId(6L)
-                .type("Agency x")
+                .type("Agency x TYPE")
                 .build();
         Technician tech = Technician.builder()
                 .techId(4L)
@@ -97,7 +97,7 @@ public class AddAppointmentTest {
         //GIVEN
         Client client = Client.builder()
                 .clientId(6L)
-                .type("Agency x")
+                .type("Agency x TYPE")
                 .build();
         Technician tech = Technician.builder()
                 .techId(4L)

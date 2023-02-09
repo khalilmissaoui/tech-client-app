@@ -76,7 +76,7 @@ public class TechClientAppointmentApplication {
 						.build();
 
 				Client client = Client.builder()
-						.type("Agency "+ i)
+						.type("Agency"+ i + "TYPE")
 						.address(address )
 						.build();
 				clientRepository.save(client);

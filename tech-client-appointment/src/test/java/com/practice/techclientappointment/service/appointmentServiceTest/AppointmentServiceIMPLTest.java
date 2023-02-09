@@ -46,7 +46,7 @@ class AppointmentServiceIMPLTest {
 
         //GIVEN
         Client client = Client.builder()
-                .type("Agency x")
+                .type("Agency x TYPE")
                 .build();
         Technician tech = Technician.builder()
                 .firstName("tech4")
@@ -77,7 +77,7 @@ class AppointmentServiceIMPLTest {
         //GIVEN
         Long ID = 1L ;
         Client client = Client.builder()
-                .type("Agency x")
+                .type("Agency x TYPE")
                 .build();
         Technician tech = Technician.builder()
                 .techId(ID)
@@ -124,11 +124,11 @@ class AppointmentServiceIMPLTest {
         Long ID = 1L ;
         Client client = Client.builder()
                 .clientId(ID)
-                .type("Agency x")
+                .type("Agency x TYPE")
                 .build();
         Client client2 = Client.builder()
                 .clientId(ID)
-                .type("Agency x")
+                .type("Agency x TYPE")
                 .build();
         Technician tech = Technician.builder()
                 .firstName("tech4")
@@ -164,7 +164,7 @@ class AppointmentServiceIMPLTest {
         Long ID = 2L;
         Client client = Client.builder()
                 .clientId(ID)
-                .type("Agency x")
+                .type("Agency x TYPE")
                 .build();
         Technician tech = Technician.builder()
                 .techId(ID)

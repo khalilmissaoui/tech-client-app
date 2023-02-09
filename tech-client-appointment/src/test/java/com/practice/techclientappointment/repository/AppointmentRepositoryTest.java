@@ -34,7 +34,7 @@ class AppointmentRepositoryTest {
                 .build();
 
         Client client = Client.builder()
-                .type("Agency")
+                .type("AgencyTYPE")
                 .address(address )
                 .build();
 
@@ -76,7 +76,7 @@ class AppointmentRepositoryTest {
                 .street("Street")
                 .build();
         Client client = Client.builder()
-                .type("Agency")
+                .type("AgencyTYPE")
                 .address(address )
                 .build();
         Appointment appointment = Appointment
