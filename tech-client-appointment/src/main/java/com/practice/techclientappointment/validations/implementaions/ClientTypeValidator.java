@@ -1,17 +1,16 @@
-package com.practice.techclientappointment.util.clientType;
+package com.practice.techclientappointment.validations.implementaions;
 
-import com.practice.techclientappointment.util.phoneNumber.ContactNumberConstraint;
+import com.practice.techclientappointment.validations.annotations.ClientTypeValidation;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 
-
 public class ClientTypeValidator implements
-        ConstraintValidator<ClientTypeConstraint, String> {
+        ConstraintValidator<ClientTypeValidation, String> {
 
     @Override
-    public void initialize(ClientTypeConstraint clientType) {
+    public void initialize(ClientTypeValidation clientType) {
     }
 
     @Override

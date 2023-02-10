@@ -1,13 +1,15 @@
-package com.practice.techclientappointment.util.phoneNumber;
+package com.practice.techclientappointment.validations.implementaions;
+
+import com.practice.techclientappointment.validations.annotations.ContactNumberValidation;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 public class ContactNumberValidator implements
-        ConstraintValidator<ContactNumberConstraint, String> {
+        ConstraintValidator<ContactNumberValidation, String> {
 
     @Override
-    public void initialize(ContactNumberConstraint contactNumber) {
+    public void initialize(ContactNumberValidation contactNumber) {
     }
 
     @Override
