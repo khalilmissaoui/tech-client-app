@@ -1,6 +1,6 @@
 package com.practice.techclientappointment.entity;
 
-import com.practice.techclientappointment.util.clientType.ClientTypeConstraint;
+import com.practice.techclientappointment.validations.annotations.ClientTypeValidation;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,20 +13,18 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table( name = "T_CLIENT")
+@Table(name = "T_CLIENT")
 public class Client {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long clientId;
 
-    @ClientTypeConstraint
+    @ClientTypeValidation
     private String type;
 
     @Embedded
     private Address address;
-
-
 
 
 }

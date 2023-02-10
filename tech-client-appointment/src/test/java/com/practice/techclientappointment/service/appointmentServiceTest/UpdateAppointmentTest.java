@@ -25,7 +25,7 @@ import static org.mockito.BDDMockito.given;
 @ActiveProfiles("test")
 
 public class UpdateAppointmentTest {
-//update name to methode name
+    //update name to methode name
     @Mock
     private AppointmentRepository appointmentRepository;
 
@@ -39,7 +39,6 @@ public class UpdateAppointmentTest {
             return new AppointmentServiceIMPL();
         }
     }
-
 
 
     @Test
@@ -94,9 +93,35 @@ public class UpdateAppointmentTest {
         Appointment appointment = Appointment.builder().appointmentId(2L).price("323 £").time(new Date()).client(client).technician(tech).build();
 
 
-
         given(appointmentRepository.findById(appointment.getAppointmentId())).willReturn(Optional.empty());
-        assertThrows(RuntimeException.class , ()-> appointmentService.updateAppointment(appointment));
+        assertThrows(RuntimeException.class, () -> appointmentService.updateAppointment(appointment));
+
+    }
+
+    @Test
+    void SHOULD_THROW_EXCEPTION_INVALID_APPOINTMENT_PARAM() {
+
+        //GIVEN
+        Client client = Client.builder()
+                .clientId(6L)
+                .type("Agency x TYPE")
+                .build();
+        Technician tech = Technician.builder()
+                .techId(4L)
+                .firstName("tech4")
+                .lastName("achref")
+                .phoneNumber("42342322433")
+                .personalPhoneNumber("41233398842")
+                .Zone("H")
+                .speciality("electrique")
+                .isAvailable(true)
+                .build();
+        //appointment is missing price
+        Appointment appointment = Appointment.builder().appointmentId(1L).time(new Date()).client(client).technician(tech).build();
+
+        //THEN
+        assertThrows(RuntimeException.class, () -> appointmentService.updateAppointment(appointment));
+
 
     }
 }

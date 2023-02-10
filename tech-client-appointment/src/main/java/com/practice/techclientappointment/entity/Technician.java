@@ -1,7 +1,7 @@
 package com.practice.techclientappointment.entity;
 
 
-import com.practice.techclientappointment.util.phoneNumber.ContactNumberConstraint;
+import com.practice.techclientappointment.validations.annotations.ContactNumberValidation;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table( name = "T_TECHNICIEN"
+@Table(name = "T_TECHNICIEN"
         /*, uniqueConstraints = @UniqueConstraint(
         name = "unique_attributes_tech",
         columnNames = {"number" , "personalPhoneNumber"}
@@ -26,26 +26,25 @@ import java.util.List;
 public class Technician {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long techId;
 
-    private String firstName ;
-    private String lastName ;
+    private String firstName;
+    private String lastName;
 
     @Column(
 
             name = "number",
             nullable = false
     )
-    @ContactNumberConstraint
-    private String phoneNumber ;
+    @ContactNumberValidation
+    private String phoneNumber;
+    @ContactNumberValidation
+    private String personalPhoneNumber;
 
-    @ContactNumberConstraint
-    private String personalPhoneNumber ;
+    private String speciality;
 
-    private String speciality ;
-
-    private String Zone ;
+    private String Zone;
     @Transient
     private Boolean isMarried;
 
@@ -62,5 +61,5 @@ public class Technician {
     private Agency agency;
 
     @OneToMany()
-    private List<Appointment>  appointment;
+    private List<Appointment> appointment;
 }

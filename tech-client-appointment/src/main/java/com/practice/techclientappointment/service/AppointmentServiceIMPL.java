@@ -2,8 +2,11 @@ package com.practice.techclientappointment.service;
 
 import com.practice.techclientappointment.entity.Appointment;
 import com.practice.techclientappointment.repository.AppointmentRepository;
+import com.practice.techclientappointment.validations.ValidateEntity;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.util.List;
@@ -13,24 +16,29 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @Service
 @Transactional
-public class AppointmentServiceIMPL implements IAppointmentService  {
+@Slf4j
+public class AppointmentServiceIMPL implements IAppointmentService {
     @Autowired
     private AppointmentRepository appointmentRepository;
+    //factory design to only initiate our Validation entity once for a performance optimisation
+    ValidateEntity validateEntity = new ValidateEntity<Appointment>() {
+    };
 
-    //add validation of data
-    //starter validation avec assertj qlq methode
-    //annotation de validation de startup validation
 
+    //add validation block in every methode -- with @valid
+    // add not null appointment to be saved and returned
     public Appointment addAppointment(@Valid Appointment appointment) {
 
-        // add not null appointment to be saved and returned
-            return appointmentRepository.save(appointment);
+        validateEntity.validate(appointment);
+
+
+        return appointmentRepository.save(appointment);
 
     }
 
-    public Appointment findAppointmentById(Long id){
+    //use Long param id to find and return an appointment
+    public Appointment findAppointmentById(Long id) {
 
-        //use Long param id to find and return an appointment
 
         assertThat(id).isNotNull();
 
@@ -38,16 +46,18 @@ public class AppointmentServiceIMPL implements IAppointmentService  {
         return returnAppointmentIfExistById(id);
     }
 
+    // return a list of appointments
     public List<Appointment> findAllAppointments() {
 
-        // return a list of appointments
         //Improvement -- use DTO
         return appointmentRepository.findAll();
     }
 
+
+    // return a list of appointments from db filtered by technician id (Long)
     public List<Appointment> findAppointmentByTechnicianId(Long id) {
 
-        // return a list of appointments from db filtered by technician id (Long)
+
         assertThat(id).isNotNull();
 
         //Improvement -- use DTO
@@ -56,34 +66,37 @@ public class AppointmentServiceIMPL implements IAppointmentService  {
     }
 
 
+    // return a list of appointments from db filtered by client id (Long)
     public List<Appointment> findAppointmentByClientId(Long id) {
         assertThat(id).isNotNull();
 
-        // return a list of appointments from db filtered by client id (Long)
 
         return appointmentRepository.findByClientId(id);
     }
 
+    //use Long param id to delete an appointment
     public void deleteAppointmentById(Long id) {
 
-        //use Long param id to delete an appointment
         assertThat(id).isNotNull();
 
         returnAppointmentIfExistById(id);
-            appointmentRepository.deleteById(id);
+        appointmentRepository.deleteById(id);
 
     }
+
+    // take not null appointment to update and return the updated value
     public Appointment updateAppointment(@Valid Appointment appointment) {
 
-        // take not null appointment to update and return the updated value
+        validateEntity.validate(appointment);
         returnAppointmentIfExistById(appointment.getAppointmentId());
-        return  appointmentRepository.save(appointment);
+
+
+        return appointmentRepository.save(appointment);
 
     }
 
 
-    private Appointment returnAppointmentIfExistById (Long id) throws RuntimeException{
-        // take not null appointment to update and return the updated value
+    private Appointment returnAppointmentIfExistById(Long id) throws RuntimeException {
         assertThat(id).isNotNull();
 
         // improve --> throw custom exception
@@ -91,4 +104,6 @@ public class AppointmentServiceIMPL implements IAppointmentService  {
                 () -> new RuntimeException(" Error : Appointment you are trying to handle does not exist ")
         );
     }
+
+
 }
