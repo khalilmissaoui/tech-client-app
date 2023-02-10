@@ -5,6 +5,9 @@ import com.practice.techclientappointment.repository.AppointmentRepository;
 import com.practice.techclientappointment.validations.ValidateEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -51,6 +54,24 @@ public class AppointmentServiceIMPL implements IAppointmentService {
 
         //Improvement -- use DTO
         return appointmentRepository.findAll();
+    }
+
+
+    public List<Appointment> findAllAppointmentsListByPageAndListSize(
+            int page, int size, String sortProperty) {
+
+        assertThat(page).isNotNull();
+        assertThat(size).isNotNull();
+        //even it is blank , the query still work pretty fine without sorting
+        assertThat(sortProperty).isNotNull();
+
+
+        PageRequest pageReq
+                = PageRequest.of(page, size, Sort.by(sortProperty));
+
+        Page<Appointment> appointments = appointmentRepository
+                .findAll(pageReq);
+        return appointments.getContent();
     }
 
 
