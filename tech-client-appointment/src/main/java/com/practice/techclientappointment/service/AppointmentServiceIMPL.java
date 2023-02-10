@@ -2,6 +2,8 @@ package com.practice.techclientappointment.service;
 
 import com.practice.techclientappointment.entity.Appointment;
 import com.practice.techclientappointment.repository.AppointmentRepository;
+import com.practice.techclientappointment.validations.ValidateEntity;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,14 +16,21 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @Service
 @Transactional
+@Slf4j
 public class AppointmentServiceIMPL implements IAppointmentService {
     @Autowired
     private AppointmentRepository appointmentRepository;
+    //factory design to only initiate our Validation entity once for a performance optimisation
+    ValidateEntity validateEntity = new ValidateEntity<Appointment>() {
+    };
 
 
     //add validation block in every methode -- with @valid
     // add not null appointment to be saved and returned
     public Appointment addAppointment(@Valid Appointment appointment) {
+
+        validateEntity.validate(appointment);
+
 
         return appointmentRepository.save(appointment);
 
@@ -78,13 +87,15 @@ public class AppointmentServiceIMPL implements IAppointmentService {
     // take not null appointment to update and return the updated value
     public Appointment updateAppointment(@Valid Appointment appointment) {
 
+        validateEntity.validate(appointment);
         returnAppointmentIfExistById(appointment.getAppointmentId());
+
+
         return appointmentRepository.save(appointment);
 
     }
 
 
-    // take not null appointment to update and return the updated value
     private Appointment returnAppointmentIfExistById(Long id) throws RuntimeException {
         assertThat(id).isNotNull();
 
@@ -93,4 +104,6 @@ public class AppointmentServiceIMPL implements IAppointmentService {
                 () -> new RuntimeException(" Error : Appointment you are trying to handle does not exist ")
         );
     }
+
+
 }
