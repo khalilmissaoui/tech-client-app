@@ -1,4 +1,5 @@
 package com.practice.techclientappointment.service.appointmentServiceTest;
+
 import com.practice.techclientappointment.entity.Appointment;
 import com.practice.techclientappointment.entity.Client;
 import com.practice.techclientappointment.entity.Technician;
@@ -20,7 +21,9 @@ import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 import java.util.Date;
 import java.util.Set;
+
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 
@@ -41,7 +44,8 @@ public class AddAppointmentTest {
             return new AppointmentServiceIMPL();
         }
     }
-    // Entities validator  
+
+    // Entities validator
     ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
     Validator validator = factory.getValidator();
 
@@ -66,7 +70,6 @@ public class AddAppointmentTest {
         Appointment appointment = Appointment.builder().appointmentId(1L).price("1325 $").time(new Date()).client(client).technician(tech).build();
 
 
-
         //WHEN
         given(appointmentRepository.save(appointment)).willReturn(appointment);
 
@@ -88,7 +91,7 @@ public class AddAppointmentTest {
         Set<ConstraintViolation<Appointment>> violations = validator.validate(appointment2);
 
         // 5 detected NOT valid fields : id / client id / tech id / price length less than 2 / price blank
-        assertThat(violations.size() ).isEqualTo(5);
+        assertThat(violations.size()).isEqualTo(5);
     }
 
     @Test
@@ -128,5 +131,31 @@ public class AddAppointmentTest {
 
     }
 
+    @Test
+    void SHOULD_THROW_EXCEPTION_INVALID_APPOINTMENT_PARAM() {
+
+        //GIVEN
+        Client client = Client.builder()
+                .clientId(6L)
+                .type("Agency x TYPE")
+                .build();
+        Technician tech = Technician.builder()
+                .techId(4L)
+                .firstName("tech4")
+                .lastName("achref")
+                .phoneNumber("42342322433")
+                .personalPhoneNumber("41233398842")
+                .Zone("H")
+                .speciality("electrique")
+                .isAvailable(true)
+                .build();
+        //appointment is missing price
+        Appointment appointment = Appointment.builder().appointmentId(1L).time(new Date()).client(client).technician(tech).build();
+
+        //THEN
+        assertThrows(RuntimeException.class, () -> appointmentService.addAppointment(appointment));
+
+
+    }
 
 }
