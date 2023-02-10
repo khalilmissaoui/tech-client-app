@@ -43,11 +43,11 @@ public class UpdateAppointmentTest {
 
     @Test
     void SHOULD_FIND_APPOINTMENT_AND_UPDATE_IT_BY_ID() {
+        //GIVEN
         Client client = Client.builder()
                 .clientId(6L)
                 .type("Agency x")
                 .build();
-
         Technician tech = Technician.builder()
                 .techId(4L)
                 .firstName("tech4")
@@ -58,15 +58,15 @@ public class UpdateAppointmentTest {
                 .speciality("electrique")
                 .isAvailable(true)
                 .build();
-
         Appointment appointment = Appointment.builder().appointmentId(2L).price("323 £").time(new Date()).client(client).technician(tech).build();
 
-//test ID APP.id
-
+        //WHEN
         given(appointmentRepository.findById(appointment.getAppointmentId()))
                 .willReturn(Optional.of(appointment));
         given(appointmentRepository.save(appointment))
                 .willReturn(appointment);
+
+        //THEN
         assertThat(appointmentService.updateAppointment(appointment))
                 .isEqualTo(appointment);
 
@@ -74,11 +74,11 @@ public class UpdateAppointmentTest {
 
     @Test
     void SHOULD_THROW_RT_EXCEPTION_WHEN_NOT_FIND_APPOINTMENT_BY_ID() {
+        //GIVEN
         Client client = Client.builder()
                 .clientId(6L)
                 .type("Agency x")
                 .build();
-
         Technician tech = Technician.builder()
                 .techId(4L)
                 .firstName("tech4")
@@ -89,11 +89,12 @@ public class UpdateAppointmentTest {
                 .speciality("electrique")
                 .isAvailable(true)
                 .build();
-
         Appointment appointment = Appointment.builder().appointmentId(2L).price("323 £").time(new Date()).client(client).technician(tech).build();
 
-
+        //WHEN
         given(appointmentRepository.findById(appointment.getAppointmentId())).willReturn(Optional.empty());
+
+        //THEN
         assertThrows(RuntimeException.class, () -> appointmentService.updateAppointment(appointment));
 
     }
