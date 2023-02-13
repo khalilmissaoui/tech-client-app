@@ -9,7 +9,7 @@ import java.lang.annotation.*;
 
 @Documented
 @Constraint(validatedBy = ContactNumberValidator.class)
-@Target({ElementType.METHOD, ElementType.FIELD})
+@Target({ElementType.METHOD, ElementType.FIELD, ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ExceptionMessageValidation {
     String message() default "Invalid exception message , add service name ex : [service name]SERVICE-[Exception reason]";
