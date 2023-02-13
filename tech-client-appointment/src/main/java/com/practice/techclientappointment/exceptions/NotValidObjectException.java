@@ -1,14 +1,16 @@
 package com.practice.techclientappointment.exceptions;
 
-import com.practice.techclientappointment.validations.annotations.ExceptionMessageValidation;
+import com.practice.techclientappointment.exceptions.model.ErrorMessage;
 import org.springframework.http.HttpStatus;
 
 public class NotValidObjectException extends BaseException {
     public NotValidObjectException() {
-        super("appointmentSERVICE - Not valid object");
+
+        super(new ErrorMessage("appointmentService", "Invalid object"));
+
     }
 
-    public NotValidObjectException(@ExceptionMessageValidation String message) {
+    public NotValidObjectException(ErrorMessage message) {
         super(message);
     }
 

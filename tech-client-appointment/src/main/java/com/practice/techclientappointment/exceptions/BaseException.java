@@ -1,12 +1,12 @@
 package com.practice.techclientappointment.exceptions;
 
-import com.practice.techclientappointment.validations.annotations.ExceptionMessageValidation;
+import com.practice.techclientappointment.exceptions.model.ErrorMessage;
 import org.springframework.http.HttpStatus;
 
 public abstract class BaseException extends RuntimeException {
 
-    public BaseException(@ExceptionMessageValidation String message) {
-        super(message);
+    public BaseException(ErrorMessage message) {
+        super(message.getErrorMessage());
     }
 
     public abstract HttpStatus getStatusCode();
