@@ -15,6 +15,6 @@ public class ExceptionMessageValidator implements
     @Override
     public boolean isValid(String contactField,
                            ConstraintValidatorContext cxt) {
-        return contactField != null && contactField.matches("^[A-Za-z-0-9]*SERVICE-*[A-Za-z-0-9]*");
+        return contactField != null && contactField.matches("^[A-Za-z-0-9]*SERVICE - *[A-Za-z-0-9- ]*");
     }
 }
