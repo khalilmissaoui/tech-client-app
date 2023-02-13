@@ -1,5 +1,7 @@
 package com.practice.techclientappointment.validations;
 
+import com.practice.techclientappointment.exceptions.NotValidObjectException;
+
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
@@ -16,7 +18,7 @@ public interface ValidateEntity<T> {
         Set<ConstraintViolation<T>> violations = validator.validate(objectToValidate);
 
         if (!violations.isEmpty()) {
-            throw new RuntimeException("---------------------+++++++++++ unvalidated object");
+            throw new NotValidObjectException();
         }
     }
 }
