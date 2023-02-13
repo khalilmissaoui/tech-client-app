@@ -1,14 +1,14 @@
 package com.practice.techclientappointment.validations.annotations;
 
 
-import com.practice.techclientappointment.validations.implementaions.ContactNumberValidator;
+import com.practice.techclientappointment.validations.implementaions.ExceptionMessageValidator;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
 import java.lang.annotation.*;
 
 @Documented
-@Constraint(validatedBy = ContactNumberValidator.class)
+@Constraint(validatedBy = ExceptionMessageValidator.class)
 @Target({ElementType.METHOD, ElementType.FIELD, ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ExceptionMessageValidation {
