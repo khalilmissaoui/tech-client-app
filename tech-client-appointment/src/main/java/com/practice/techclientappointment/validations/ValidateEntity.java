@@ -7,10 +7,11 @@ import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public interface ValidateEntity<T> {
 
-    // Validate generic objects and throws and RTE in case of invalidity
+    // Validate generic objects and throws and Base EXCEPTION in case of invalidity
     default void validate(T objectToValidate) throws RuntimeException {
 
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
@@ -18,7 +19,11 @@ public interface ValidateEntity<T> {
         Set<ConstraintViolation<T>> violations = validator.validate(objectToValidate);
 
         if (!violations.isEmpty()) {
-            throw new NotValidObjectException();
+            var errorMessages = violations
+                    .stream()
+                    .map(ConstraintViolation::getMessage)
+                    .collect(Collectors.toSet());
+            throw new NotValidObjectException(errorMessages);
         }
     }
 }
