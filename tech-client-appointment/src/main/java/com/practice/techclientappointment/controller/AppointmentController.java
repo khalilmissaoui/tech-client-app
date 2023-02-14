@@ -24,7 +24,7 @@ public class AppointmentController {
     }
 
     @GetMapping("/{id}/by-tech")
-    public ResponseEntity<List<Appointment>> getAppointmentByTechId(@PathVariable String id) {
+    public ResponseEntity<List<Appointment>> getAppointmentByTechId(@PathVariable("id") String id) {
         Long parsedTechId = Long.parseLong(id);
         List<Appointment> appointmentsList = appointmentService.findAppointmentByTechnicianId(parsedTechId);
         return new ResponseEntity<>(appointmentsList, HttpStatus.OK);
@@ -32,7 +32,7 @@ public class AppointmentController {
     }
 
     @GetMapping("/{id}/by-client")
-    public ResponseEntity<List<Appointment>> getAppointmentByClientId(@PathVariable String id) {
+    public ResponseEntity<List<Appointment>> getAppointmentByClientId(@PathVariable("id") String id) {
         Long parsedClientId = Long.parseLong(id);
         List<Appointment> appointmentsList = appointmentService.findAppointmentByClientId(parsedClientId);
         return new ResponseEntity<>(appointmentsList, HttpStatus.OK);
@@ -40,7 +40,7 @@ public class AppointmentController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Appointment> getAppointmentById(@PathVariable String id) {
+    public ResponseEntity<Appointment> getAppointmentById(@PathVariable("id") String id) {
         Long parsedAppointmentId = Long.parseLong(id);
         Appointment appointment = appointmentService.findAppointmentById(parsedAppointmentId);
         return new ResponseEntity<>(appointment, HttpStatus.OK);
@@ -64,11 +64,10 @@ public class AppointmentController {
 
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Appointment> deleteAppointmentById(@PathVariable String id) {
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteAppointmentById(@PathVariable String id) {
         Long parsedAppointmentId = Long.parseLong(id);
         appointmentService.deleteAppointmentById(parsedAppointmentId);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-
     }
 
 }
