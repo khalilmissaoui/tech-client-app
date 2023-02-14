@@ -1,4 +1,4 @@
-package com.practice.techclientappointment.exceptions;
+package com.practice.techclientappointment.exceptions.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;

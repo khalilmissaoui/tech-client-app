@@ -1,5 +1,6 @@
 package com.practice.techclientappointment.exceptions;
 
+import com.practice.techclientappointment.exceptions.model.ErrorDetails;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
