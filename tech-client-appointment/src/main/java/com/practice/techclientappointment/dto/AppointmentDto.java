@@ -1,9 +1,16 @@
 package com.practice.techclientappointment.dto;
 
+import com.practice.techclientappointment.entity.Appointment;
+import com.practice.techclientappointment.entity.Client;
+import com.practice.techclientappointment.entity.Technician;
+import com.practice.techclientappointment.exceptions.NotFoundException;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.text.ParseException;
@@ -13,35 +20,30 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class AppointmentDto {
 
-    enum Location {
-        US,
-        EU
-    }
+    @PersistenceContext
+    private EntityManager entityManager;
+
 
     private static final SimpleDateFormat dateFormat
             = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
-    @NotNull(message = "appointmentId should not be null")
-    private Long appointmentId;
 
     @NotBlank(message = "price should not be empty string")
     private String price;
-
-    @NotNull
-    private Location location;
 
 
     @NotNull
     private String time;
 
     @NotNull
-    private Long clientId;
+    private String clientId;
 
 
     @NotNull
-    private Long techId;
+    private String techId;
 
 
     private Date parseStringToDate(String timezone) throws ParseException {
@@ -53,8 +55,37 @@ public class AppointmentDto {
         return date.toString();
     }
 
-/*    private String convertPrice(String price) {
+    public Appointment toEntity(AppointmentDto appointmentDto) throws Exception {
+        if (appointmentDto == null) {
+            throw new NotFoundException();
+        }
+        //light solution to test if entity exist
+        Technician technicianFound = entityManager.getReference(Technician.class, techId);
+        Client clientFound = entityManager.getReference(Client.class, clientId);
 
-    }*/
+        return Appointment.builder()
+                .price(appointmentDto.getPrice())
+                .time(parseStringToDate(appointmentDto.getTime()))
+                .client(clientFound)
+                .technician(technicianFound)
+                .build();
+    }
 
+
+    public AppointmentDto toDTO(Appointment appointment) {
+
+        if (appointment == null) {
+            throw new NotFoundException();
+        }
+        return AppointmentDto.builder()
+                .price(appointment.getPrice())
+                .time(stringifyDate(appointment.getTime()))
+                .clientId(appointment.getClient().getClientId().toString())
+                .techId(appointment.getTechnician().getTechId().toString())
+                .build();
+    }
 }
+
+
+//projections are an alternative
+// add projections to handle retrieved data for tech and client without DTO
