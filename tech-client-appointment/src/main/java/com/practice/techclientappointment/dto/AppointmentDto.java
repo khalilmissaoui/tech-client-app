@@ -4,13 +4,13 @@ import com.practice.techclientappointment.entity.Appointment;
 import com.practice.techclientappointment.entity.Client;
 import com.practice.techclientappointment.entity.Technician;
 import com.practice.techclientappointment.exceptions.NotFoundException;
+import com.practice.techclientappointment.repository.ClientRepository;
+import com.practice.techclientappointment.repository.TechnicianRepository;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.text.ParseException;
@@ -23,8 +23,9 @@ import java.util.Date;
 @Builder
 public class AppointmentDto {
 
-    @PersistenceContext
-    private EntityManager entityManager;
+
+    ClientRepository clientRepository;
+    TechnicianRepository technicianRepository;
 
 
     private static final SimpleDateFormat dateFormat
@@ -59,9 +60,9 @@ public class AppointmentDto {
         if (appointmentDto == null) {
             throw new NotFoundException();
         }
-        //light solution to test if entity exist
-        Technician technicianFound = entityManager.getReference(Technician.class, techId);
-        Client clientFound = entityManager.getReference(Client.class, clientId);
+        //light solution to test if entity exist : still can use repo.getbyid ; it does implements getreference implicitly
+        Technician technicianFound = technicianRepository.getReferenceById(Long.parseLong(appointmentDto.getTechId()));
+        Client clientFound = clientRepository.getReferenceById(Long.parseLong(appointmentDto.getClientId()));
 
         return Appointment.builder()
                 .price(appointmentDto.getPrice())
@@ -89,3 +90,5 @@ public class AppointmentDto {
 
 //projections are an alternative
 // add projections to handle retrieved data for tech and client without DTO
+
+//other dto solutions : mapStuck : mapper deps : current way
