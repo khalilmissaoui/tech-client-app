@@ -125,12 +125,19 @@ public class AppointmentServiceIMPL implements IAppointmentService {
     }
 
     // take not null appointment to update and return the updated value
-    public Appointment updateAppointment(@Valid Appointment appointment) {
+    public Appointment updateAppointment(@Valid AppointmentDto appointmentDto) {
 
-        validateEntity.validate(appointment);
-        returnAppointmentIfExistById(appointment.getAppointmentId());
+        validateEntity.validate(appointmentDto);
+        returnAppointmentIfExistById(appointmentDto.getId());
 
+        Appointment appointment = appointmentDto.toEntity();
+        appointment.setAppointmentId(appointmentDto.getId());
+        Technician technicianFound = technicianRepository.getReferenceById(appointmentDto.getTechId());
+        Client clientFound = clientRepository.getReferenceById(appointmentDto.getClientId());
+        appointment.setClient(clientFound);
+        appointment.setTechnician(technicianFound);
 
+        
         return appointmentRepository.save(appointment);
 
     }
