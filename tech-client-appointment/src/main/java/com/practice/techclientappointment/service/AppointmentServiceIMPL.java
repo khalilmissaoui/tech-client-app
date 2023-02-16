@@ -1,8 +1,13 @@
 package com.practice.techclientappointment.service;
 
+import com.practice.techclientappointment.dto.AppointmentDto;
 import com.practice.techclientappointment.entity.Appointment;
+import com.practice.techclientappointment.entity.Client;
+import com.practice.techclientappointment.entity.Technician;
 import com.practice.techclientappointment.repository.AppointmentRepository;
-import com.practice.techclientappointment.validations.ValidateEntity;
+import com.practice.techclientappointment.repository.ClientRepository;
+import com.practice.techclientappointment.repository.TechnicianRepository;
+import com.practice.techclientappointment.validations.implementaions.ObjectValidator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -23,21 +28,35 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 public class AppointmentServiceIMPL implements IAppointmentService {
     @Autowired
     private AppointmentRepository appointmentRepository;
-    //factory design to only initiate our Validation entity once for a performance optimisation
-    ValidateEntity validateEntity = new ValidateEntity<Appointment>() {
-    };
 
+    @Autowired
+    private ClientRepository clientRepository;
+
+    @Autowired
+    private TechnicianRepository technicianRepository;
+
+
+    //factory design to only initiate our Validation entity once for a performance optimisation
+    private final ObjectValidator validateEntity = new ObjectValidator();
 
     //add validation block in every methode -- with @valid
     // add not null appointment to be saved and returned
-    public Appointment addAppointment(@Valid Appointment appointment) {
+    public Appointment addAppointment(AppointmentDto appointmentDto) {
+
+
+        validateEntity.validate(appointmentDto);
+        Appointment appointment = appointmentDto.toEntity();
+
+        Technician technicianFound = technicianRepository.getReferenceById(appointmentDto.getTechId());
+        Client clientFound = clientRepository.getReferenceById(appointmentDto.getClientId());
+        appointment.setClient(clientFound);
+        appointment.setTechnician(technicianFound);
 
         validateEntity.validate(appointment);
-
-
         return appointmentRepository.save(appointment);
 
     }
+
 
     //use Long param id to find and return an appointment
     public Appointment findAppointmentById(Long id) {
