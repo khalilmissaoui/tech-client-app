@@ -1,5 +1,6 @@
 package com.practice.techclientappointment.entity;
 
+import com.practice.techclientappointment.dto.AppointmentDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -53,5 +54,16 @@ public class Appointment {
     )
     @NotNull(message = "tech Id should not be null")
     private Technician technician;
+
+
+    public AppointmentDto toDTO() {
+
+        return AppointmentDto.builder()
+                .price(this.getPrice())
+                .time(this.getTime())
+                .clientId(this.getClient().getClientId())
+                .techId(this.getTechnician().getTechId())
+                .build();
+    }
 
 }
