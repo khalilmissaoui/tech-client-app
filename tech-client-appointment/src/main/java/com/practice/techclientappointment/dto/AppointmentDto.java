@@ -16,7 +16,7 @@ import java.util.Date;
 @Builder
 public class AppointmentDto {
 
-
+    private Long id;
     @NotBlank(message = "price should not be empty string")
     private String price;
 
