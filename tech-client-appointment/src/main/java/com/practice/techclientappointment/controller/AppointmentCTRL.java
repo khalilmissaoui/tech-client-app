@@ -65,7 +65,7 @@ public class AppointmentCTRL {
 
 
     @PutMapping(value = {"/update-appointment"})
-    public ResponseEntity<AppointmentDto> updateAppointment(@Valid @RequestBody Appointment appointment) {
+    public ResponseEntity<AppointmentDto> updateAppointment(@Valid @RequestBody AppointmentDto appointment) {
 
         Appointment createdAppointment = appointmentService.updateAppointment(appointment);
         return new ResponseEntity<>(createdAppointment.toDTO(), HttpStatus.OK);
