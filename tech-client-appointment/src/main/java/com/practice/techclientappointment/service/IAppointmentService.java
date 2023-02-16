@@ -1,11 +1,13 @@
 package com.practice.techclientappointment.service;
 
+import com.practice.techclientappointment.dto.AppointmentDto;
 import com.practice.techclientappointment.entity.Appointment;
 
 import java.util.List;
 
 public interface IAppointmentService {
-    Appointment addAppointment(Appointment appointment);
+    Appointment addAppointment(AppointmentDto appointmentDto) throws Exception;
+
     Appointment findAppointmentById(Long id);
 
     List<Appointment> findAllAppointments();
@@ -16,5 +18,5 @@ public interface IAppointmentService {
 
     void deleteAppointmentById(Long id);
 
-    Appointment updateAppointment(Appointment appointment);
+    Appointment updateAppointment(AppointmentDto appointment);
 }
