@@ -61,8 +61,8 @@ public class Appointment {
         return AppointmentDto.builder()
                 .price(this.getPrice())
                 .time(this.getTime())
-                .clientId(this.getClient().getClientId())
-                .techId(this.getTechnician().getTechId())
+                .clientId(this.getClient().getClientId().toString())
+                .techId(this.getTechnician().getTechId().toString())
                 .build();
     }
 
