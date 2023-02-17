@@ -45,6 +45,7 @@ public class Mapper {
             throw new NotFoundException();
         }
         return AppointmentDto.builder()
+                .id(appointment.getAppointmentId())
                 .price(appointment.getPrice())
                 .time(appointment.getTime())
                 .clientId(appointment.getClient().getClientId().toString())
