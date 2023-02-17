@@ -1,6 +1,6 @@
 package com.practice.techclientappointment.entity;
 
-import com.practice.techclientappointment.dto.AppointmentDto;
+import com.practice.techclientappointment.dto.dtos.AppointmentDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

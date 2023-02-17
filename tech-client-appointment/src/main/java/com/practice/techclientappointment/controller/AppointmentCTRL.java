@@ -1,7 +1,7 @@
 package com.practice.techclientappointment.controller;
 
 
-import com.practice.techclientappointment.dto.AppointmentDto;
+import com.practice.techclientappointment.dto.dtos.AppointmentDto;
 import com.practice.techclientappointment.entity.Appointment;
 import com.practice.techclientappointment.service.AppointmentServiceIMPL;
 import org.springframework.beans.factory.annotation.Autowired;

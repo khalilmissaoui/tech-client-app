@@ -1,6 +1,6 @@
 package com.practice.techclientappointment.service;
 
-import com.practice.techclientappointment.dto.AppointmentDto;
+import com.practice.techclientappointment.dto.dtos.AppointmentDto;
 import com.practice.techclientappointment.entity.Appointment;
 import com.practice.techclientappointment.entity.Client;
 import com.practice.techclientappointment.entity.Technician;
@@ -132,12 +132,14 @@ public class AppointmentServiceIMPL implements IAppointmentService {
 
         Appointment appointment = appointmentDto.toEntity();
         appointment.setAppointmentId(appointmentDto.getId());
+
         Technician technicianFound = technicianRepository.getReferenceById(appointmentDto.getTechId());
         Client clientFound = clientRepository.getReferenceById(appointmentDto.getClientId());
+
         appointment.setClient(clientFound);
         appointment.setTechnician(technicianFound);
 
-        
+
         return appointmentRepository.save(appointment);
 
     }
