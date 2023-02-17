@@ -1,6 +1,7 @@
 package com.practice.techclientappointment.service;
 
 import com.practice.techclientappointment.entity.Appointment;
+import com.practice.techclientappointment.exceptions.NotFoundException;
 import com.practice.techclientappointment.repository.AppointmentRepository;
 import com.practice.techclientappointment.validations.implementaions.ObjectValidator;
 import lombok.extern.slf4j.Slf4j;
@@ -11,7 +12,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import javax.validation.Valid;
 import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -28,8 +28,7 @@ public class AppointmentServiceIMPL implements IAppointmentService {
     //factory design to only initiate our Validation entity once for a performance optimisation
     private final ObjectValidator validateEntity = new ObjectValidator();
 
-    //add validation block in every methode -- with @valid
-    // add not null appointment to be saved and returned
+
     public Appointment addAppointment(Appointment appointment) {
 
 
@@ -45,14 +44,12 @@ public class AppointmentServiceIMPL implements IAppointmentService {
 
         assertThat(id).isNotNull();
 
-        //Improvement -- use DTO
         return returnAppointmentIfExistById(id);
     }
 
     // return a list of appointments
     public List<Appointment> findAllAppointments() {
 
-        //Improvement -- use DTO
         return appointmentRepository.findAll();
     }
 
@@ -78,10 +75,7 @@ public class AppointmentServiceIMPL implements IAppointmentService {
     // return a list of appointments from db filtered by technician id (Long)
     public List<Appointment> findAppointmentByTechnicianId(Long id) {
 
-
         assertThat(id).isNotNull();
-
-        //Improvement -- use DTO
         //Improvement -- check if tech exist and find by tech instead of id
         return appointmentRepository.findByTechId(id);
     }
@@ -91,7 +85,7 @@ public class AppointmentServiceIMPL implements IAppointmentService {
     public List<Appointment> findAppointmentByClientId(Long id) {
         assertThat(id).isNotNull();
 
-
+        // same chekc as techid
         return appointmentRepository.findByClientId(id);
     }
 
@@ -106,7 +100,7 @@ public class AppointmentServiceIMPL implements IAppointmentService {
     }
 
     // take not null appointment to update and return the updated value
-    public Appointment updateAppointment(@Valid Appointment appointment) {
+    public Appointment updateAppointment(Appointment appointment) {
 
         validateEntity.validate(appointment);
         returnAppointmentIfExistById(appointment.getAppointmentId());
@@ -116,12 +110,10 @@ public class AppointmentServiceIMPL implements IAppointmentService {
     }
 
 
-    private Appointment returnAppointmentIfExistById(Long id) throws RuntimeException {
+    private Appointment returnAppointmentIfExistById(Long id) {
         assertThat(id).isNotNull();
-
-        // improve --> throw custom exception
         return appointmentRepository.findById(id).orElseThrow(
-                () -> new RuntimeException(" Error : Appointment you are trying to handle does not exist ")
+                NotFoundException::new
         );
     }
 
