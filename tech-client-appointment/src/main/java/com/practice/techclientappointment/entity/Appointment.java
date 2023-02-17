@@ -33,8 +33,7 @@ public class Appointment {
 
 
     @ManyToOne(
-            optional = false
-            , cascade = CascadeType.ALL
+            cascade = CascadeType.ALL
     )
     @JoinColumn(
             name = "client_id",
@@ -44,10 +43,7 @@ public class Appointment {
 
     private Client client;
 
-    @ManyToOne(optional = false
-            , cascade = CascadeType.ALL
-
-    )
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(
             name = "tech_id",
             referencedColumnName = "techId"
