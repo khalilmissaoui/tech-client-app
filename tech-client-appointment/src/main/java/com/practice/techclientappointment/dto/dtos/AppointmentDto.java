@@ -1,6 +1,5 @@
-package com.practice.techclientappointment.dto;
+package com.practice.techclientappointment.dto.dtos;
 
-import com.practice.techclientappointment.entity.Appointment;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,32 +15,32 @@ import java.util.Date;
 @Builder
 public class AppointmentDto {
 
+
     private Long id;
+
     @NotBlank(message = "price should not be empty string")
     private String price;
 
 
-    @NotNull
+    @NotNull(message = "time should not be null")
     private Date time;
 
-    @NotNull
-    private Long clientId;
+    @NotNull(message = "clientId should not be null")
+    private String clientId;
 
 
-    @NotNull
-    private Long techId;
+    @NotNull(message = "techId should not be null")
+    private String techId;
 
-
-    public Appointment toEntity() {
-
-
-        return Appointment.builder()
-                .price(this.getPrice())
-                .time(this.getTime())
-                .build();
-    }
-
-
+//    public Appointment toEntity() {
+//
+//
+//        return Appointment.builder()
+//                .price(this.getPrice())
+//                .time(this.getTime())
+//                .build();
+//    }
+    
 }
 
 
