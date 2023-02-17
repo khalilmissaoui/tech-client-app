@@ -20,7 +20,7 @@ services:
 
   app-service:
     container_name: app-service
-    image: khalilmissaoui/client-tech-gestion:data-layer.v1
+    image: khalilmissaoui/client-tech-gestion:service-layer.v1
     restart: on-failure
     environment:
       - SPRING_PROFILES_ACTIVE=docker
