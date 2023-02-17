@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 @RestController
 @Slf4j
 public class AppointmentCTRL {
-    //sans interface - appointmentCTRL request mmapping nom propre -
+
     @Autowired
     private AppointmentServiceIMPL appointmentService;
 
@@ -34,7 +34,7 @@ public class AppointmentCTRL {
     }
 
 
-    @GetMapping("/by-tech/{id}")
+    @GetMapping("/byTech/{id}")
     public ResponseEntity<List<AppointmentDto>> getAppointmentByTechId(@PathVariable("id") String id) {
         Long parsedTechId = Long.parseLong(id);
         List<Appointment> appointmentList = appointmentService.findAppointmentByTechnicianId(parsedTechId);
@@ -61,8 +61,8 @@ public class AppointmentCTRL {
 
     }
 
-    @PostMapping(value = {"/add-appointment"})
-    public ResponseEntity<AppointmentDto> createNewAppointment(@Valid @RequestBody AppointmentDto appointment) throws Exception {
+    @PostMapping(value = {"/"})
+    public ResponseEntity<AppointmentDto> createNewAppointment(@Valid @RequestBody AppointmentDto appointment) {
 
         Appointment createdAppointment =
                 appointmentService.addAppointment(mapper.toEntity(appointment));
@@ -70,8 +70,8 @@ public class AppointmentCTRL {
     }
 
 
-    @PutMapping(value = {"/update-appointment"})
-    public ResponseEntity<AppointmentDto> updateAppointment(@Valid @RequestBody AppointmentDto appointmentDTO) throws Exception {
+    @PutMapping(value = {"/"})
+    public ResponseEntity<AppointmentDto> updateAppointment(@Valid @RequestBody AppointmentDto appointmentDTO) {
 
         Appointment appointment = mapper.toEntity(appointmentDTO);
         appointment.setAppointmentId(appointmentDTO.getId());
