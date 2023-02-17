@@ -1,12 +1,7 @@
 package com.practice.techclientappointment.service;
 
-import com.practice.techclientappointment.dto.dtos.AppointmentDto;
 import com.practice.techclientappointment.entity.Appointment;
-import com.practice.techclientappointment.entity.Client;
-import com.practice.techclientappointment.entity.Technician;
 import com.practice.techclientappointment.repository.AppointmentRepository;
-import com.practice.techclientappointment.repository.ClientRepository;
-import com.practice.techclientappointment.repository.TechnicianRepository;
 import com.practice.techclientappointment.validations.implementaions.ObjectValidator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,28 +24,14 @@ public class AppointmentServiceIMPL implements IAppointmentService {
     @Autowired
     private AppointmentRepository appointmentRepository;
 
-    @Autowired
-    private ClientRepository clientRepository;
-
-    @Autowired
-    private TechnicianRepository technicianRepository;
-
 
     //factory design to only initiate our Validation entity once for a performance optimisation
     private final ObjectValidator validateEntity = new ObjectValidator();
 
     //add validation block in every methode -- with @valid
     // add not null appointment to be saved and returned
-    public Appointment addAppointment(AppointmentDto appointmentDto) {
+    public Appointment addAppointment(Appointment appointment) {
 
-
-        validateEntity.validate(appointmentDto);
-        Appointment appointment = appointmentDto.toEntity();
-
-        Technician technicianFound = technicianRepository.getReferenceById(appointmentDto.getTechId());
-        Client clientFound = clientRepository.getReferenceById(appointmentDto.getClientId());
-        appointment.setClient(clientFound);
-        appointment.setTechnician(technicianFound);
 
         validateEntity.validate(appointment);
         return appointmentRepository.save(appointment);
@@ -125,20 +106,10 @@ public class AppointmentServiceIMPL implements IAppointmentService {
     }
 
     // take not null appointment to update and return the updated value
-    public Appointment updateAppointment(@Valid AppointmentDto appointmentDto) {
+    public Appointment updateAppointment(@Valid Appointment appointment) {
 
-        validateEntity.validate(appointmentDto);
-        returnAppointmentIfExistById(appointmentDto.getId());
-
-        Appointment appointment = appointmentDto.toEntity();
-        appointment.setAppointmentId(appointmentDto.getId());
-
-        Technician technicianFound = technicianRepository.getReferenceById(appointmentDto.getTechId());
-        Client clientFound = clientRepository.getReferenceById(appointmentDto.getClientId());
-
-        appointment.setClient(clientFound);
-        appointment.setTechnician(technicianFound);
-
+        validateEntity.validate(appointment);
+        returnAppointmentIfExistById(appointment.getAppointmentId());
 
         return appointmentRepository.save(appointment);
 
