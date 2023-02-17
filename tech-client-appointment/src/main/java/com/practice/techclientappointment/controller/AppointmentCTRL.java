@@ -27,7 +27,7 @@ public class AppointmentCTRL {
 
     @GetMapping(value = {"", "/"})
     public ResponseEntity<List<AppointmentDto>> getAllAppointments() {
-
+        log.info("ENDPOINT : getAllAppointments");
         List<Appointment> appointmentList = appointmentService.findAllAppointments();
         List<AppointmentDto> appointmentDtoList = entitiesToDTOs(appointmentList);
         return new ResponseEntity<>(appointmentDtoList, HttpStatus.OK);
@@ -35,7 +35,8 @@ public class AppointmentCTRL {
 
 
     @GetMapping("/byTech/{id}")
-    public ResponseEntity<List<AppointmentDto>> getAppointmentByTechId(@PathVariable("id") String id) {
+    public ResponseEntity<List<AppointmentDto>> getAppointmentsByTechId(@PathVariable("id") String id) {
+        log.info("ENDPOINT : getAppointmentsByTechId" + " [id] : " + id);
         Long parsedTechId = Long.parseLong(id);
         List<Appointment> appointmentList = appointmentService.findAppointmentByTechnicianId(parsedTechId);
         List<AppointmentDto> appointmentDtoList = entitiesToDTOs(appointmentList);
@@ -45,7 +46,9 @@ public class AppointmentCTRL {
     }
 
     @GetMapping("/byClient/{id}")
-    public ResponseEntity<List<AppointmentDto>> getAppointmentByClientId(@PathVariable("id") String id) {
+    public ResponseEntity<List<AppointmentDto>> getAppointmentsByClientId(@PathVariable("id") String id) {
+        log.info("ENDPOINT : getAppointmentsByClientId" + " [id] : " + id);
+
         Long parsedClientId = Long.parseLong(id);
         List<Appointment> appointmentsList = appointmentService.findAppointmentByClientId(parsedClientId);
         List<AppointmentDto> appointmentDtoList = entitiesToDTOs(appointmentsList);
@@ -55,6 +58,8 @@ public class AppointmentCTRL {
 
     @GetMapping("/{id}")
     public ResponseEntity<AppointmentDto> getAppointmentById(@PathVariable("id") String id) {
+        log.info("ENDPOINT : getAppointmentById" + " [id] : " + id);
+
         Long parsedAppointmentId = Long.parseLong(id);
         Appointment appointment = appointmentService.findAppointmentById(parsedAppointmentId);
         return new ResponseEntity<>(mapper.toDTO(appointment), HttpStatus.OK);
@@ -64,6 +69,8 @@ public class AppointmentCTRL {
     @PostMapping(value = {"/"})
     public ResponseEntity<AppointmentDto> createNewAppointment(@Valid @RequestBody AppointmentDto appointment) {
 
+        log.info("ENDPOINT : createNewAppointment" + " [AppointmentDto] : " + appointment.toString());
+
         Appointment createdAppointment =
                 appointmentService.addAppointment(mapper.toEntity(appointment));
         return new ResponseEntity<>(mapper.toDTO(createdAppointment), HttpStatus.CREATED);
@@ -72,6 +79,9 @@ public class AppointmentCTRL {
 
     @PutMapping(value = {"/"})
     public ResponseEntity<AppointmentDto> updateAppointment(@Valid @RequestBody AppointmentDto appointmentDTO) {
+
+        log.info("ENDPOINT : updateAppointment" + " [AppointmentDto] : " + appointmentDTO.toString());
+
 
         Appointment appointment = mapper.toEntity(appointmentDTO);
         appointment.setAppointmentId(appointmentDTO.getId());
@@ -84,6 +94,8 @@ public class AppointmentCTRL {
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteAppointmentById(@PathVariable String id) {
+        log.info("ENDPOINT : deleteAppointmentById" + " [id] : " + id);
+
         Long parsedAppointmentId = Long.parseLong(id);
         appointmentService.deleteAppointmentById(parsedAppointmentId);
     }
