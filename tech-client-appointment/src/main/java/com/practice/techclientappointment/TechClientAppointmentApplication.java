@@ -14,10 +14,8 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @SpringBootApplication
-@EnableSwagger2
 @EnableJpaRepositories(basePackages = {"com.practice.techclientappointment.repository"})
 @EntityScan(basePackages = {"com.practice.techclientappointment.entity"})
 public class TechClientAppointmentApplication {
