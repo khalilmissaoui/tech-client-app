@@ -1,4 +1,4 @@
-package com.practice.techclientappointment.validations;
+package com.practice.techclientappointment.validations.implementaions;
 
 import com.practice.techclientappointment.exceptions.NotValidObjectException;
 
@@ -9,14 +9,14 @@ import javax.validation.ValidatorFactory;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public interface ValidateEntity<T> {
+public class ObjectValidator {
+    private final ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+    private final Validator validator = factory.getValidator();
 
-    // Validate generic objects and throws and Base EXCEPTION in case of invalidity
-    default void validate(T objectToValidate) throws RuntimeException {
+    public void validate(Object objectToValidate) throws RuntimeException {
 
-        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-        Validator validator = factory.getValidator();
-        Set<ConstraintViolation<T>> violations = validator.validate(objectToValidate);
+
+        Set<ConstraintViolation<Object>> violations = validator.validate(objectToValidate);
 
         if (!violations.isEmpty()) {
             var errorMessages = violations

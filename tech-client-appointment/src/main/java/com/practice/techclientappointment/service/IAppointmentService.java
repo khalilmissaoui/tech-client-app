@@ -5,7 +5,8 @@ import com.practice.techclientappointment.entity.Appointment;
 import java.util.List;
 
 public interface IAppointmentService {
-    Appointment addAppointment(Appointment appointment);
+    Appointment addAppointment(Appointment appointment) throws Exception;
+
     Appointment findAppointmentById(Long id);
 
     List<Appointment> findAllAppointments();

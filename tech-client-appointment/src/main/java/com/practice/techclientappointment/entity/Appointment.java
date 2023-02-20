@@ -1,5 +1,6 @@
 package com.practice.techclientappointment.entity;
 
+import com.practice.techclientappointment.dto.dtos.AppointmentDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,25 +17,23 @@ import java.util.Date;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table( name = "T_APPOINTMENT")
+@Table(name = "T_APPOINTMENT")
 
 public class Appointment {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
-    @NotNull(message = "appointmentId should not be null")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long appointmentId;
 
     @NotBlank(message = "price should not be empty string")
-    @Size(min = 2, max = 10 , message = "price should not be less than 2 digits")
+    @Size(min = 2, max = 10, message = "price should not be less than 2 digits")
     private String price;
 
-    @Temporal (TemporalType.DATE)
-    private Date time ;
+    @Temporal(TemporalType.DATE)
+    private Date time;
 
 
     @ManyToOne(
-            optional = false
-            ,cascade=CascadeType.ALL
+            cascade = CascadeType.ALL
     )
     @JoinColumn(
             name = "client_id",
@@ -44,15 +43,23 @@ public class Appointment {
 
     private Client client;
 
-    @ManyToOne(optional = false
-            ,cascade=CascadeType.ALL
-
-    )
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(
             name = "tech_id",
             referencedColumnName = "techId"
     )
     @NotNull(message = "tech Id should not be null")
     private Technician technician;
+
+
+    public AppointmentDto toDTO() {
+
+        return AppointmentDto.builder()
+                .price(this.getPrice())
+                .time(this.getTime())
+                .clientId(this.getClient().getClientId().toString())
+                .techId(this.getTechnician().getTechId().toString())
+                .build();
+    }
 
 }

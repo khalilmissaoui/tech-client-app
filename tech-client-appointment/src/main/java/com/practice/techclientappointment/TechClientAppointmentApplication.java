@@ -16,81 +16,82 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
-@EnableJpaRepositories(basePackages = { "com.practice.techclientappointment.repository" })
-@EntityScan(basePackages = { "com.practice.techclientappointment.entity" })
+@EnableJpaRepositories(basePackages = {"com.practice.techclientappointment.repository"})
+@EntityScan(basePackages = {"com.practice.techclientappointment.entity"})
 public class TechClientAppointmentApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(TechClientAppointmentApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(TechClientAppointmentApplication.class, args);
+    }
 
-	@Bean
-	@Profile("!test")
-	public CommandLineRunner loadData(AgencyRepository agencyRepository , TechnicianRepository technicianRepository , ClientRepository clientRepository) {
-		return args -> {
-
-
-			// BUILD AGENCIES
-			Agency agency1 = Agency.builder()
-					.name("Agence 1")
-					.localisation("Paris sud")
-					.build();
-
-			Agency agency2 = Agency.builder()
-					.name("Agence 2")
-					.localisation("Paris nord")
-					.build();
+    @Bean
+    @Profile("!test")
+    public CommandLineRunner loadData(AgencyRepository agencyRepository, TechnicianRepository technicianRepository
+            , ClientRepository clientRepository) {
+        return args -> {
 
 
-			// BUILD TECHNICIANS
-			Technician tech1 = Technician.builder()
-					.firstName("rami")
-					.lastName("petit")
-					.phoneNumber("142497733")
-					.personalPhoneNumber("1772398842")
-					.Zone("C")
-					.speciality("electrique")
-					.isAvailable(true)
-					.build();
+            // BUILD AGENCIES
+            Agency agency1 = Agency.builder()
+                    .name("Agence 1")
+                    .localisation("Paris sud")
+                    .build();
 
-			Technician tech2 = Technician.builder()
-					.firstName("tech2")
-					.lastName("last2")
-					.phoneNumber("234239999")
-					.personalPhoneNumber("232998842")
-					.Zone("D")
-					.speciality("batiment")
-					.isAvailable(false)
-					.build();
+            Agency agency2 = Agency.builder()
+                    .name("Agence 2")
+                    .localisation("Paris nord")
+                    .build();
 
 
-			// BUILD CLIENTS
-			int CREATED_CLIENTS = 5 ;
+            // BUILD TECHNICIANS
+            Technician tech1 = Technician.builder()
+                    .firstName("rami")
+                    .lastName("petit")
+                    .phoneNumber("142497733")
+                    .personalPhoneNumber("1772398842")
+                    .Zone("C")
+                    .speciality("electrique")
+                    .isAvailable(true)
+                    .build();
+
+            Technician tech2 = Technician.builder()
+                    .firstName("tech2")
+                    .lastName("last2")
+                    .phoneNumber("234239999")
+                    .personalPhoneNumber("232998842")
+                    .Zone("D")
+                    .speciality("batiment")
+                    .isAvailable(false)
+                    .build();
 
 
-			for (int i = 0; i < CREATED_CLIENTS; i++) {
-				Address address = Address.builder()
-						.city("paris "+ i )
-						.houseNumber(Integer.toString(i))
-						.street("Street "+ i)
-						.build();
-
-				Client client = Client.builder()
-						.type("Agency"+ i + "TYPE")
-						.address(address )
-						.build();
-				clientRepository.save(client);
-			}
+            // BUILD CLIENTS
+            int CREATED_CLIENTS = 5;
 
 
-			// SAVE AGENCIES ENTITIES
-			agencyRepository.save(agency1);
-			agencyRepository.save(agency2);
+            for (int i = 0; i < CREATED_CLIENTS; i++) {
+                Address address = Address.builder()
+                        .city("paris " + i)
+                        .houseNumber(Integer.toString(i))
+                        .street("Street " + i)
+                        .build();
+
+                Client client = Client.builder()
+                        .type("Agency" + i + "TYPE")
+                        .address(address)
+                        .build();
+                clientRepository.save(client);
+            }
 
 
-			// SAVE TECHNICIANS
-			technicianRepository.save(tech1);
-			technicianRepository.save(tech2);
-		};
-	}
+            // SAVE AGENCIES ENTITIES
+            agencyRepository.save(agency1);
+            agencyRepository.save(agency2);
+
+
+            // SAVE TECHNICIANS
+            technicianRepository.save(tech1);
+            technicianRepository.save(tech2);
+        };
+    }
 }
