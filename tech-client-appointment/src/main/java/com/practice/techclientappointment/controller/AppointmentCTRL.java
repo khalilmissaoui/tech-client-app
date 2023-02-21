@@ -148,12 +148,12 @@ public class AppointmentCTRL {
 
     })
     @PostMapping(value = {"/"})
-    public ResponseEntity<AppointmentDto> createNewAppointment(@Valid @RequestBody AppointmentDto appointment) {
+    public ResponseEntity<AppointmentDto> createNewAppointment(@Valid @RequestBody AppointmentDto appointmentDto) {
 
-        log.info("ENDPOINT : createNewAppointment" + " [AppointmentDto] : " + appointment.toString());
+        log.info("ENDPOINT : createNewAppointment" + " [AppointmentDto] : " + appointmentDto.toString());
 
         Appointment createdAppointment =
-                appointmentService.addAppointment(mapper.toEntity(appointment));
+                appointmentService.addAppointment(mapper.toEntity(appointmentDto));
         return new ResponseEntity<>(mapper.toDTO(createdAppointment), HttpStatus.CREATED);
     }
 
