@@ -5,6 +5,12 @@ import com.practice.techclientappointment.dto.Mapper;
 import com.practice.techclientappointment.dto.dtos.AppointmentDto;
 import com.practice.techclientappointment.entity.Appointment;
 import com.practice.techclientappointment.service.AppointmentServiceIMPL;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,6 +31,7 @@ public class AppointmentCTRL {
     @Autowired
     Mapper mapper;
 
+    @Operation(summary = "Get all appointments")
     @GetMapping(value = {"", "/"})
     public ResponseEntity<List<AppointmentDto>> getAllAppointments() {
         log.info("ENDPOINT : getAllAppointments");
@@ -34,6 +41,7 @@ public class AppointmentCTRL {
     }
 
 
+    @Operation(summary = "Get appointment by the technician id")
     @GetMapping("/byTech/{id}")
     public ResponseEntity<List<AppointmentDto>> getAppointmentsByTechId(@PathVariable("id") String id) {
         log.info("ENDPOINT : getAppointmentsByTechId" + " [id] : " + id);
@@ -45,6 +53,7 @@ public class AppointmentCTRL {
 
     }
 
+    @Operation(summary = "Get appointment by the client id")
     @GetMapping("/byClient/{id}")
     public ResponseEntity<List<AppointmentDto>> getAppointmentsByClientId(@PathVariable("id") String id) {
         log.info("ENDPOINT : getAppointmentsByClientId" + " [id] : " + id);
@@ -56,8 +65,18 @@ public class AppointmentCTRL {
 
     }
 
+    @Operation(summary = "Get appointment by the id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Found the appointment",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = Appointment.class)) }),
+            @ApiResponse(responseCode = "400", description = "Invalid id supplied",
+                    content = @Content)
+            })
     @GetMapping("/{id}")
-    public ResponseEntity<AppointmentDto> getAppointmentById(@PathVariable("id") String id) {
+    public ResponseEntity<AppointmentDto> getAppointmentById(
+            @Parameter(description = "id of appointment to be searched")
+            @PathVariable("id") String id) {
         log.info("ENDPOINT : getAppointmentById" + " [id] : " + id);
 
         Long parsedAppointmentId = Long.parseLong(id);
@@ -66,6 +85,7 @@ public class AppointmentCTRL {
 
     }
 
+    @Operation(summary = "Create new appointment")
     @PostMapping(value = {"/"})
     public ResponseEntity<AppointmentDto> createNewAppointment(@Valid @RequestBody AppointmentDto appointment) {
 
@@ -77,6 +97,7 @@ public class AppointmentCTRL {
     }
 
 
+    @Operation(summary = "Update an appointment")
     @PutMapping(value = {"/"})
     public ResponseEntity<AppointmentDto> updateAppointment(@Valid @RequestBody AppointmentDto appointmentDTO) {
 
@@ -91,6 +112,7 @@ public class AppointmentCTRL {
     }
 
 
+    @Operation(summary = "Delete appointment")
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteAppointmentById(@PathVariable String id) {
