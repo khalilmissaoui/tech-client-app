@@ -21,6 +21,10 @@ services:
   app-service:
     container_name: app-service
     image: khalilmissaoui/client-tech-gestion:controller-layer.v1
+    ports:
+      - "8080:8080"
+    expose:
+      - "8080"
     restart: on-failure
     environment:
       - SPRING_PROFILES_ACTIVE=docker
