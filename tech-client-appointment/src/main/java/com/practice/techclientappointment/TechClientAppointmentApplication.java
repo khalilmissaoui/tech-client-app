@@ -15,6 +15,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
+
 @SpringBootApplication
 @EnableJpaRepositories(basePackages = {"com.practice.techclientappointment.repository"})
 @EntityScan(basePackages = {"com.practice.techclientappointment.entity"})
