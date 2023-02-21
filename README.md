@@ -10,7 +10,7 @@ une application pour gestionner les rdv entre un client et un technicien
  
 - **Client** 
 - **Appointement** 
-- **Technicien** 
+- **technician** 
 
 ### Gateways ###
 
@@ -20,7 +20,7 @@ une application pour gestionner les rdv entre un client et un technicien
 | -----------------------------| :---------------------------------------: |
 | Client Controller               |  /client                        |
 | Appointement Controller            |  /**                        |
-| Technicien Controller               |  /Technicien                               |
+| technician Controller               |  /technician                               |
 
 
 ## Swagger UI : /v1/appointment-service/swagger-ui/index.html
