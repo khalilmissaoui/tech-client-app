@@ -90,8 +90,8 @@ public class AddAppointmentTest {
         //THEN
         Set<ConstraintViolation<Appointment>> violations = validator.validate(appointment2);
 
-        // 5 detected NOT valid fields : id / client id / tech id / price length less than 2 / price blank
-        assertThat(violations.size()).isEqualTo(5);
+        // 4 detected NOT valid fields :  client id / tech id / price length less than 2 / price blank
+        assertThat(violations.size()).isEqualTo(4);
     }
 
     @Test
