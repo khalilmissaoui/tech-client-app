@@ -7,6 +7,7 @@ import com.practice.techclientappointment.entity.Appointment;
 import com.practice.techclientappointment.service.AppointmentServiceIMPL;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -26,12 +27,16 @@ import java.util.stream.Collectors;
 public class AppointmentCTRL {
 
     @Autowired
+    Mapper mapper;
+    @Autowired
     private AppointmentServiceIMPL appointmentService;
 
-    @Autowired
-    Mapper mapper;
-
     @Operation(summary = "Get all appointments")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "List of all appointments",
+                    content = {@Content(mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = AppointmentDto.class)))})
+    })
     @GetMapping(value = {"", "/"})
     public ResponseEntity<List<AppointmentDto>> getAllAppointments() {
         log.info("ENDPOINT : getAllAppointments");
@@ -68,11 +73,13 @@ public class AppointmentCTRL {
     @Operation(summary = "Get appointment by the id")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Found the appointment",
-                    content = { @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = Appointment.class)) }),
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = AppointmentDto.class))}),
             @ApiResponse(responseCode = "400", description = "Invalid id supplied",
+                    content = @Content),
+            @ApiResponse(responseCode = "404", description = "Appointment does not exist",
                     content = @Content)
-            })
+    })
     @GetMapping("/{id}")
     public ResponseEntity<AppointmentDto> getAppointmentById(
             @Parameter(description = "id of appointment to be searched")
