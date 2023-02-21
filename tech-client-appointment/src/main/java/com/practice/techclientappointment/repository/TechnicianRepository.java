@@ -4,12 +4,14 @@ import com.practice.techclientappointment.entity.Technician;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
-public interface TechnicianRepository  extends JpaRepository<Technician, Long> {
+@Repository
+public interface TechnicianRepository extends JpaRepository<Technician, Long> {
 
 
     Optional<Technician> findFirstByIsAvailableIsTrue();
@@ -21,8 +23,8 @@ public interface TechnicianRepository  extends JpaRepository<Technician, Long> {
     Optional<Technician> findByTechId(Long id);
 
     Optional<Technician> findFirstByFirstName(String firstName);
-    List<Technician> findByIsAvailableIsNull();
 
+    List<Technician> findByIsAvailableIsNull();
 
 
     @Modifying
@@ -34,7 +36,6 @@ public interface TechnicianRepository  extends JpaRepository<Technician, Long> {
     int updateTechStateToAvailable(Long id);
 
 
-
     @Modifying
     @Transactional
     @Query(
@@ -44,14 +45,13 @@ public interface TechnicianRepository  extends JpaRepository<Technician, Long> {
     int updateTechStateToUnavailable(Long id);
 
 
-
     @Modifying
     @Transactional
     @Query(
             value = "update t_technicien set first_name = ?1 where tech_id = ?2",
             nativeQuery = true
     )
-    int updateFirstNameByID(String firstName , Long id);
+    int updateFirstNameByID(String firstName, Long id);
 
 
 }
